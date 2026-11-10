@@ -32,13 +32,38 @@ body{margin:0;background:#0B1B2B}
 a{color:#1F5FBF}a:hover{color:#174A96}
 a:focus-visible{outline:2px solid #F2A33A;outline-offset:3px}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+/* Hero opening: the horizon draws, the sun crosses to the right, shines, then settles so the text can be read.
+   Runs once on load, about 4.5 s. CSS only. The end state is the plain page. */
+.hero-wrap{position:relative;z-index:0}
+.hz{position:relative;height:120px;margin-top:24px}
+.hz-line{position:absolute;left:0;right:0;bottom:0;height:1px;background:#F2A33A;transform-origin:0 50%;animation:hz-draw 1.1s cubic-bezier(.6,0,.2,1) both}
+.hz-sun{position:absolute;bottom:0;left:calc(88% - 112px);width:112px;height:56px;animation:hz-cross 2.3s cubic-bezier(.45,0,.2,1) .25s both}
+.hz-disc{position:absolute;inset:0;border:1.5px solid #F2A33A;border-bottom:none;border-radius:112px 112px 0 0;
+  animation:hz-shine 2.2s ease-in-out 2.3s both}
+.hz-glow{position:absolute;left:50%;bottom:0;width:900px;height:900px;margin:0 0 -450px -450px;border-radius:50%;z-index:-1;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,214,150,.75) 0,rgba(242,163,58,.38) 14%,rgba(242,163,58,.12) 38%,rgba(242,163,58,0) 68%);
+  clip-path:inset(0 0 50% 0);opacity:.16;transform:scale(.55);animation:hz-glow 2.4s ease-in-out 2.2s both}
+.hero-copy{animation:hz-copy 2.6s ease-out .2s both}
+header{overflow:hidden}
+@media (max-width:640px){.hero-wrap{display:flex;flex-direction:column}.hero-wrap>nav{order:-2}
+  .hz{order:-1;height:64px;margin-top:20px}.hero-copy{padding-top:36px !important}
+  .hero-wrap>nav>div{gap:4px 18px !important;font-size:14.5px !important}}
+@keyframes hz-draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes hz-cross{from{left:0;opacity:0}12%{opacity:1}to{left:calc(88% - 112px);opacity:1}}
+@keyframes hz-shine{0%{background:rgba(242,163,58,0);box-shadow:0 0 0 rgba(242,163,58,0)}
+  35%{background:rgba(255,214,150,.95);box-shadow:0 -6px 60px 18px rgba(242,163,58,.75)}
+  100%{background:rgba(242,163,58,0);box-shadow:0 0 0 rgba(242,163,58,0)}}
+@keyframes hz-glow{0%{opacity:0;transform:scale(.2)}35%{opacity:1;transform:scale(1.15)}100%{opacity:.16;transform:scale(.55)}}
+@keyframes hz-copy{0%{opacity:.25}70%{opacity:.6}100%{opacity:1}}
+@media (prefers-reduced-motion: reduce){.hz-line,.hz-sun,.hz-disc,.hz-glow,.hero-copy{animation:none}}
+
 </style>
 </head>
 <body>
 <div style="font-family: Inter, system-ui, sans-serif; color: #0B1B2B; background: #F6F8FA; font-size: 17px; line-height: 1.55">
 
 <header style="background: #0B1B2B; color: #F6F8FA">
-<div style="max-width: 1120px; margin: 0 auto; padding: 24px 32px 0 32px; box-sizing: border-box">
+<div class="hero-wrap" style="max-width: 1120px; margin: 0 auto; padding: 24px 32px 0 32px; box-sizing: border-box">
 <nav style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
 <a href="#top" style="display: flex; align-items: center; gap: 12px; color: #F6F8FA; text-decoration: none">
 <span aria-hidden="true" style="display: inline-block; width: 34px; height: 18px; border-bottom: 2px solid #F2A33A; position: relative"><span style="position: absolute; left: 8px; bottom: 0; width: 16px; height: 8px; border: 2px solid #F2A33A; border-bottom: none; border-radius: 16px 16px 0 0"></span></span>
@@ -54,7 +79,7 @@ a:focus-visible{outline:2px solid #F2A33A;outline-offset:3px}
 </div>
 </nav>
 
-<div id="top" style="padding: 96px 0 0 0; max-width: 900px">
+<div id="top" class="hero-copy" style="padding: 96px 0 0 0; max-width: 900px">
 <p style="margin: 0 0 24px 0; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #F2A33A">Practical AI for owner-run and mid-sized companies</p>
 <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(40px, 6vw, 72px); line-height: 1.05; letter-spacing: -0.02em">The future is already here. I'll put it to work in your business.</h1>
 <p style="margin: 28px 0 0 0; font-size: 21px; line-height: 1.5; color: #D5DEE8; max-width: 720px">I find the problem where AI pays, build the first version with your team, and set it up to get better every month.</p>
@@ -64,8 +89,9 @@ a:focus-visible{outline:2px solid #F2A33A;outline-offset:3px}
 </div>
 </div>
 
-<div aria-hidden="true" style="position: relative; height: 120px; border-bottom: 1px solid #F2A33A; margin-top: 24px">
-<div style="position: absolute; right: 12%; bottom: 0; width: 112px; height: 56px; border: 1.5px solid #F2A33A; border-bottom: none; border-radius: 112px 112px 0 0"></div>
+<div aria-hidden="true" class="hz">
+<div class="hz-line"></div>
+<div class="hz-sun"><div class="hz-glow"></div><div class="hz-disc"></div></div>
 </div>
 <div style="height: 56px"></div>
 </div>
