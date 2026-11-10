@@ -126,7 +126,6 @@ const brand = el("div","",end,{position:"absolute",left:"0",top:px(L.brandY)});
 el("div","bname",brand,{left:px(L.markS+34),top:px(6),fontSize:px(L.fName),lineHeight:"1.1"}).textContent="Vikas Erraballi";
 el("div","burl",brand,{left:px(L.markS+36),top:px(L.fName*1.3),fontSize:px(L.fUrl),lineHeight:"1.1"}).textContent="erraballi.ai";
 el("div","btag",brand,{left:"0",top:px(L.markS+40),fontSize:px(L.fTag),lineHeight:"1.3"}).innerHTML = PORTRAIT ? "Practical AI for owner-run<br>and mid-sized companies" : "Practical AI for owner-run and mid-sized companies";
-const credit = el("div","credit",end,{left:"0",top:px(L.creditY),fontSize:px(L.fCredit)}); credit.textContent = "Built in code with Claude · Checked by a person";
 /* where the loop lands to become the mark: arc over a short line */
 const MARK = { x:L.padX+L.markS/2, y:L.brandY+L.markS*.72, s:(L.markS*.29)/R };
 
@@ -170,7 +169,7 @@ function render(t){
   G.setAttribute("transform","translate("+x.toFixed(2)+" "+y.toFixed(2)+") scale("+s.toFixed(4)+")");
 
   const et = eo(P(t,T.endText,.5)); endText.style.opacity = et; endText.style.transform = "translateY("+((1-et)*14).toFixed(2)+"px)";
-  brand.style.opacity = eo(P(t,T.brand,.5)); credit.style.opacity = eo(P(t,T.credit,.5));
+  brand.style.opacity = eo(P(t,T.brand,.5));
 }
 
 /* ---------- run ---------- */
