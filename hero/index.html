@@ -6,57 +6,37 @@
 <meta name="robots" content="noindex">
 <title>Hero film source · erraballi.ai</title>
 <!--
-  Source page for the erraballi.ai hero film. Everything is drawn in code: no footage, no images.
+  Source page for the erraballi.ai hero film "The loop" (Horizon brand). Everything is drawn in code.
   The whole film is a pure function of time: render(t) sets every style from t, so any frame can be
   reproduced exactly. Open this page to watch it live. To film it, see render.mjs.
 
   URL parameters:  ?format=landscape|portrait   (1920x1080 or 1080x1350)
                    ?capture=1                   (no scaling, no playback; render.mjs drives window.seek)
                    ?t=12.5                      (hold one frame)
-  All figures in the film are illustrative. To recut, change the T object below.
+  The figures are real results from the bank work (see the Career Master). To recut, change T, CAPS and NODES.
+  The earlier ledger film is in git history (commit eaa61bc).
 -->
 <style>
-@font-face{font-family:"Newsreader";font-weight:500;font-style:normal;src:url(fonts/newsreader-latin-500-normal.woff2) format("woff2")}
-@font-face{font-family:"Newsreader";font-weight:600;font-style:normal;src:url(fonts/newsreader-latin-600-normal.woff2) format("woff2")}
-@font-face{font-family:"Newsreader";font-weight:500;font-style:italic;src:url(fonts/newsreader-latin-500-italic.woff2) format("woff2")}
+@font-face{font-family:"Space Grotesk";font-weight:500;src:url(fonts/space-grotesk-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Space Grotesk";font-weight:600;src:url(fonts/space-grotesk-latin-600-normal.woff2) format("woff2")}
 @font-face{font-family:"Inter";font-weight:400;src:url(fonts/inter-latin-400-normal.woff2) format("woff2")}
 @font-face{font-family:"Inter";font-weight:500;src:url(fonts/inter-latin-500-normal.woff2) format("woff2")}
-@font-face{font-family:"Inter";font-weight:600;src:url(fonts/inter-latin-600-normal.woff2) format("woff2")}
 @font-face{font-family:"IBM Plex Mono";font-weight:400;src:url(fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2")}
 @font-face{font-family:"IBM Plex Mono";font-weight:500;src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2")}
-:root{--ink:#14212B;--paper:#F5F2EA;--card:#FFFFFF;--green:#1E6B4E;--rule:#B9B2A3;--muted:#4A5560}
+:root{--night:#0B1B2B;--day:#F6F8FA;--dawn:#F2A33A;--mist:#A9B8C8;--line:#5B6E82}
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;background:var(--paper);overflow:hidden}
-#stage{position:absolute;left:0;top:0;transform-origin:0 0;background:var(--paper);color:var(--ink);overflow:hidden;
+html,body{margin:0;height:100%;background:var(--night);overflow:hidden}
+#stage{position:absolute;left:0;top:0;transform-origin:0 0;background:var(--night);color:var(--day);overflow:hidden;
   font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-.cap{position:absolute;font-family:"Newsreader",Georgia,serif;font-weight:500;letter-spacing:-.012em;line-height:1.1;white-space:nowrap}
-.sheet{position:absolute;background:var(--card);border:1.5px solid var(--rule)}
-.head{position:absolute;left:0;top:0;width:100%;border-bottom:4px double var(--rule);font-family:"IBM Plex Mono",monospace;
-  text-transform:uppercase;letter-spacing:.11em;color:var(--muted)}
-.head span{position:absolute;white-space:nowrap}
-.head .clock{color:var(--green);font-weight:500}
-.slot{position:absolute;left:0;width:100%;border-bottom:1px solid var(--rule)}
-.row{position:absolute;left:0;width:100%}
-.row>span{position:absolute;white-space:nowrap}
-.time{font-family:"IBM Plex Mono",monospace;color:var(--muted)}
-.task{font-weight:500}
-.qty{font-family:"IBM Plex Mono",monospace;font-weight:500;font-variant-numeric:tabular-nums;text-align:right}
-.bar{left:0;top:0;height:100%;background:var(--green)}
-.note{font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:500;color:var(--ink);transform-origin:0 60%}
-.lab{position:absolute;font-family:"IBM Plex Mono",monospace;font-weight:500;text-transform:uppercase;letter-spacing:.11em;white-space:nowrap}
-.total{position:absolute;left:0;width:100%;border-top:4px double var(--green);font-family:"IBM Plex Mono",monospace}
-.total span{position:absolute;white-space:nowrap}
-.total .fig{font-weight:500}
-.total span span{position:static}
-svg.ov{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
-svg.ov path{fill:none;stroke-linecap:round;stroke-linejoin:round}
-.end{position:absolute}
-.mark{position:absolute;border:2px solid var(--ink);background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center}
-.mark b{font-family:"Newsreader",Georgia,serif;font-weight:600;line-height:1;letter-spacing:-.02em}
-.mark i{display:block;background:var(--green)}
-.bname{position:absolute;font-family:"Newsreader",Georgia,serif;font-weight:600;white-space:nowrap}
-.burl{position:absolute;font-family:"IBM Plex Mono",monospace;color:var(--green);white-space:nowrap}
-.credit{position:absolute;font-family:"IBM Plex Mono",monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.11em;white-space:nowrap}
+.cap{position:absolute;font-family:"Space Grotesk",system-ui,sans-serif;font-weight:600;letter-spacing:-.02em;line-height:1.08;white-space:nowrap}
+.cap em{font-style:normal;color:var(--dawn)}
+svg.ov{position:absolute;left:0;top:0;overflow:visible}
+svg.ov path,svg.ov line{fill:none;stroke-linecap:round}
+svg.ov text{font-family:"IBM Plex Mono",monospace;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
+.bname{position:absolute;font-family:"Space Grotesk",sans-serif;font-weight:600;white-space:nowrap;letter-spacing:-.01em}
+.burl{position:absolute;font-family:"IBM Plex Mono",monospace;color:var(--dawn);white-space:nowrap}
+.btag{position:absolute;font-weight:500;color:var(--mist);white-space:nowrap}
+.credit{position:absolute;font-family:"IBM Plex Mono",monospace;color:var(--mist);text-transform:uppercase;letter-spacing:.11em;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -69,219 +49,126 @@ const PORTRAIT = FORMAT === "portrait";
 
 /* ---------- layout, per format (px at output size) ---------- */
 const L = PORTRAIT ? {
-  W:1080, H:1350, cardX:48, cardW:984, cardTop:292, headH:66, rowH:84, totalH:104, padX:28, timeW:130, markW:56,
-  capTop:66, capSize:76, fTime:30, fTask:38, fQty:36, fHead:23, fNote:46, fLab:32, fFig:44, fTot:34, stroke:5, rule:2,
-  endTop:300, endSize:106, endLineY:590, brandY:690, markS:104, creditY:1252, fCredit:21
+  W:1080, H:1350, padX:72, capTop:110, capSize:78, cx:540, cy:880, R:270, fLab:25, labGap:44, stroke:5, node:11,
+  endTop:230, endSize:92, brandY:650, markS:120, fName:60, fUrl:34, fTag:33, creditY:1250, fCredit:21
 } : {
-  W:1920, H:1080, cardX:180, cardW:1560, cardTop:226, headH:54, rowH:62, totalH:92, padX:36, timeW:150, markW:56,
-  capTop:66, capSize:84, fTime:25, fTask:32, fQty:30, fHead:19, fNote:40, fLab:26, fFig:40, fTot:32, stroke:4, rule:1.5,
-  endTop:270, endSize:116, endLineY:450, brandY:560, markS:104, creditY:968, fCredit:20
+  W:1920, H:1080, padX:140, capTop:196, capSize:84, cx:1400, cy:540, R:290, fLab:23, labGap:44, stroke:5, node:11,
+  endTop:230, endSize:104, brandY:600, markS:120, fName:60, fUrl:34, fTag:32, creditY:968, fCredit:20
 };
-const SLOTS = 10;
-const sheetH = L.headH + SLOTS*L.rowH + L.totalH;
 
 /* ---------- timeline (seconds). Change these to recut. ---------- */
 const T = {
-  monRows:[0.5,1.3,2.0,2.6,3.1,3.5,3.9,4.3,4.7,5.1],
-  monTotal:5.7, dim:8.5, under5:9.1, circle8:9.5, note8:10.1, strike0:10.8, one:11.1,
-  swap:13.7, swapDur:0.6,
-  tueRows:[14.0,14.12,14.24,14.36,14.48,14.6], line:15.0, labels:15.5, pay:[16.5,17.0],
-  approve:18.7, stop:19.9, tueTotal:21.8, dbl:22.6,
-  endOut:24.7, endText:25.1, brand:25.7, credit:26.1, END:30.0
+  horizon:0.3, dot:2.9,
+  nodes:[4.8, 7.6, 9.8, 12.6, 15.0, 17.4],   /* when each step of the loop lands */
+  lap2:20.0, lap2Dur:2.3,
+  endOut:25.4, endText:25.9, brand:26.5, credit:27.0, END:30.0
 };
+const NODES = ["Listen","Read","Find","Act","Keep","Improve"];
 const CAPS = [
-  {a:0.05, b:2.3,  h:["Monday, 6:04 a.m.","No one&rsquo;s in yet."]},
-  {a:2.5,  b:5.5,  h:["The AI is doing","the paperwork."]},
-  {a:5.8,  b:7.9,  h:["179 tasks.","No errors reported."]},
-  {a:8.1,  b:11.0, h:["Look again."]},
-  {a:11.3, b:13.5, h:["It graded its own work."]},
-  {a:14.0, b:18.0, h:["Tuesday.","<span id='newline'>One new line.</span>"]},
-  {a:18.2, b:21.6, h:["You approve one.","You stop one."]},
-  {a:22.0, b:24.6, h:["Now the total","means something."]}
+  {a:0.4,  b:2.6,  h:["The future is","already here."]},
+  {a:2.8,  b:4.6,  h:["I put it to work."]},
+  {a:4.8,  b:7.4,  h:["<em>1,226</em> customers","told a bank what","was wrong."]},
+  {a:7.6,  b:9.6,  h:["AI read","every response."]},
+  {a:9.8,  b:12.4, h:["About 40 clients","at risk. <em>$300M+</em>"]},
+  {a:12.6, b:14.8, h:["Every banker got","a call plan."]},
+  {a:15.0, b:17.2, h:["None of the","top tier left."]},
+  {a:17.4, b:19.8, h:["The complaints","rewrote the roadmap."]},
+  {a:20.0, b:22.0, h:["Then it went","around again."]},
+  {a:22.2, b:25.2, h:["The first version","is the worst it","will ever be."]}
 ];
-const T_NEWLINE = T.line;
-
-/* ---------- the ledgers. Example figures only; each total is the sum of its rows. ---------- */
-const MON = [["06:04","Overnight orders entered",38],["06:05","Invoices matched to orders",61],["06:07","Customer emails answered",44],
-  ["06:09","Late delivery: customers told",12],["06:10","Invoice 0412 paid",1],["06:12","Renewal contracts read",9],
-  ["06:13","Complaints logged",7],["06:15","Invoice 0412 paid",1],["06:16","Stock reorders placed",5],["06:18","Monday sales report written",1]];
-const TUE = [["06:04","Overnight orders entered",52],["06:05","Invoices matched to orders",66],["06:07","Customer emails answered",51],
-  ["06:09","Complaints logged",6],["06:10","Stock reorders placed",9],["06:12","Tuesday sales report written",1]];
-const PAY = [["06:13","Pay invoice 0533"],["06:14","Pay invoice 0533"]];
-const sum = a => a.reduce((s,r)=>s+r[2],0);
 
 /* ---------- helpers ---------- */
 const clamp = x => Math.max(0, Math.min(1, x));
 const P = (t,a,d) => clamp((t-a)/d);
 const eo = p => 1-Math.pow(1-p,3);
 const eio = p => p<.5 ? 4*p*p*p : 1-Math.pow(-2*p+2,3)/2;
-const el = (tag, cls, parent, css) => { const e=document.createElement(tag); if(cls) e.className=cls; if(css) Object.assign(e.style,css); if(parent) parent.appendChild(e); return e; };
 const px = n => n+"px";
+const el = (tag, cls, parent, css) => { const e=document.createElement(tag); if(cls) e.className=cls; if(css) Object.assign(e.style,css); if(parent) parent.appendChild(e); return e; };
 const NS = "http://www.w3.org/2000/svg";
-function rng(seed){ let s=seed; return () => { s=(s*16807)%2147483647; return (s/2147483647)*2-1; }; }
-function handLine(x1,y1,x2,y2,seed,amp){ const r=rng(seed), n=Math.max(2,Math.round(Math.hypot(x2-x1,y2-y1)/150)); amp=amp||2.2;
-  let d="M"+x1.toFixed(1)+" "+y1.toFixed(1);
-  for(let i=1;i<=n;i++){ const u=i/n, um=(i-.5)/n;
-    d+=" Q"+(x1+(x2-x1)*um).toFixed(1)+" "+(y1+(y2-y1)*um+r()*amp).toFixed(1)+" "+(x1+(x2-x1)*u).toFixed(1)+" "+(y1+(y2-y1)*u+(i<n?r()*amp*.5:0)).toFixed(1); }
-  return d; }
-function handEllipse(cx,cy,rx,ry,seed){ const r=rng(seed), n=44, a0=-2.5; let d="";
-  for(let i=0;i<=n;i++){ const u=i/n, a=a0+u*Math.PI*2*1.08, k=1+u*.07+r()*.012;
-    d+=(i?" L":"M")+(cx+Math.cos(a)*rx*k).toFixed(1)+" "+(cy+Math.sin(a)*ry*k).toFixed(1); }
-  return d; }
-const tickPath = (x,y,s) => "M"+(x-s*.5)+" "+(y+s*.05)+" L"+(x-s*.14)+" "+(y+s*.42)+" L"+(x+s*.56)+" "+(y-s*.46);
-function path(svg,d,color,w){ const p=document.createElementNS(NS,"path"); p.setAttribute("d",d); p.setAttribute("stroke",color);
-  p.setAttribute("stroke-width",w); p.setAttribute("pathLength","1"); p.setAttribute("stroke-dasharray","1 1"); svg.appendChild(p); return p; }
-function draw(p,k){ if(k<=0){ p.style.visibility="hidden"; return; } p.style.visibility="visible"; p.setAttribute("stroke-dashoffset",(1-k).toFixed(4)); }
-const INK="#14212B", GREEN="#1E6B4E";
+const sv = (tag, attrs, parent) => { const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; };
+const NIGHT="#0B1B2B", DAY="#F6F8FA", DAWN="#F2A33A", MIST="#A9B8C8", LINE="#5B6E82";
+
+/* The loop starts at the left point on the horizon, goes over the top, and comes back underneath.
+   f is the fraction of the way round (0..1). */
+const ang = f => Math.PI - f*2*Math.PI;                 /* screen angle, y up */
+const pt = (f, r) => [Math.cos(ang(f))*r, -Math.sin(ang(f))*r];
 
 /* ---------- build ---------- */
 const stage = document.getElementById("stage");
 stage.style.width=px(L.W); stage.style.height=px(L.H);
-const sep = PORTRAIT ? "<br>" : " ";
-CAPS.forEach(c => { c.el = el("div","cap",stage,{left:px(L.cardX),top:px(L.capTop),fontSize:px(L.capSize)}); c.el.innerHTML=c.h.join(sep); });
-const newline = document.getElementById("newline");
+CAPS.forEach(c => { c.el = el("div","cap",stage,{left:px(L.padX),top:px(L.capTop),fontSize:px(L.capSize)}); c.el.innerHTML=c.h.join("<br>"); });
 
-const taskX = L.padX + L.timeW;
-const markCx = L.cardW - L.padX - L.markW/2;
-const qtyRight = L.padX + L.markW + 22;
-const slotY = i => L.headH + i*L.rowH;
-
-function buildSheet(day, gapSlots){
-  const s = {}; s.el = el("div","sheet",stage,{left:px(L.cardX),top:px(L.cardTop),width:px(L.cardW),height:px(sheetH)});
-  const head = el("div","head",s.el,{height:px(L.headH),fontSize:px(L.fHead),lineHeight:px(L.headH-4)});
-  el("span","",head,{left:px(L.padX)}).textContent = "AI work log · example figures";
-  s.clock = el("span","clock",head,{right:px(L.padX)}); s.day = day;
-  s.gap = [];
-  for(let i=0;i<SLOTS;i++){ const g = gapSlots && gapSlots.includes(i) && i!==gapSlots[gapSlots.length-1];
-    const d = el("div","slot",s.el,{top:px(slotY(i)),height:px(L.rowH),borderBottomWidth:px(L.rule), borderBottomStyle:"solid"}); if(g) s.gap.push(d); }
-  s.svg = document.createElementNS(NS,"svg"); s.svg.setAttribute("class","ov"); s.svg.setAttribute("width",L.cardW); s.svg.setAttribute("height",sheetH);
-  s.rows = [];
-  s.addRow = (slot, time, task, qty) => { const r = {slot, qty};
-    r.el = el("div","row",s.el,{top:px(slotY(slot)),height:px(L.rowH),lineHeight:px(L.rowH)});
-    r.bar = el("span","bar",r.el,{width:px(PORTRAIT?6:5)});
-    el("span","time",r.el,{left:px(L.padX),fontSize:px(L.fTime)}).textContent = time;
-    r.task = el("span","task",r.el,{left:px(taskX),fontSize:px(L.fTask)}); r.task.textContent = task;
-    r.note = el("span","note",r.el,{fontSize:px(L.fNote)});
-    if(qty!=null){ r.q = el("span","qty",r.el,{right:px(qtyRight),fontSize:px(L.fQty)}); r.q.textContent = qty; }
-    r.cy = slotY(slot)+L.rowH/2; r.time = time;
-    s.rows.push(r); return r; };
-  s.total = el("div","total",s.el,{top:px(slotY(SLOTS)),height:px(L.totalH),lineHeight:px(L.totalH-6),borderTopWidth:px(PORTRAIT?6:4)});
-  s.el.appendChild(s.svg);
-  return s;
-}
-
-/* Monday */
-const mon = buildSheet("Monday");
-MON.forEach((r,i) => { const row = mon.addRow(i, r[0], r[1], r[2]); row.tick = path(mon.svg, tickPath(markCx,row.cy,L.rowH*.42), GREEN, L.stroke); });
-const monFig = el("span","fig",mon.total,{left:px(L.padX),fontSize:px(L.fFig)}); monFig.textContent = sum(MON)+" done";
-const monErr = el("span","",mon.total,{right:px(qtyRight),fontSize:px(L.fTot),fontWeight:500}); monErr.innerHTML = "errors reported: <span id='zero'>0</span>";
-const monOne = el("span","note",mon.total,{fontSize:px(L.fNote*1.25),color:INK}); monOne.textContent = "1";
-
-/* Tuesday: six rows the AI does alone, a two-slot gap for the line, two rows that ask first */
-const tue = buildSheet("Tuesday",[6,7]);
-TUE.forEach((r,i) => { const row = tue.addRow(i, r[0], r[1], r[2]); row.tick = path(tue.svg, tickPath(markCx,row.cy,L.rowH*.42), GREEN, L.stroke); });
-const lineY = slotY(7);
-const labUp = el("div","lab",tue.el,{left:px(L.padX),top:px(lineY-L.fLab*1.9),fontSize:px(L.fLab),color:GREEN}); labUp.textContent = "AI works alone";
-const labDn = el("div","lab",tue.el,{left:px(L.padX),top:px(lineY+L.fLab*.75),fontSize:px(L.fLab),color:INK}); labDn.textContent = "AI asks first";
-const payRows = PAY.map((r,i) => tue.addRow(8+i, r[0], r[1], null));
-const tueFig = el("span","fig",tue.total,{left:px(L.padX),fontSize:px(L.fFig)}); tueFig.textContent = (sum(TUE)+1)+" done";  /* six rows the AI did alone, plus the one approved payment */
-const tueRest = el("span","",tue.total,{right:px(L.padX),fontSize:px(L.fTot)}); tueRest.textContent = "1 stopped"; tueRest.style.fontWeight = 500;
-tue.svg.remove(); tue.el.appendChild(tue.svg);
+const svg = sv("svg",{class:"ov",width:L.W,height:L.H},stage);
+const horizon = sv("line",{x1:0,y1:L.cy,x2:L.W,y2:L.cy,stroke:DAWN,"stroke-width":2,pathLength:1,"stroke-dasharray":"1 1"},svg);
+const G = sv("g",{},svg);                                 /* the loop, in its own coordinates around 0,0 */
+const R = L.R;
+const track = sv("circle",{cx:0,cy:0,r:R,fill:"none",stroke:LINE,"stroke-width":1.5,"vector-effect":"non-scaling-stroke"},G);
+const circ = "M"+(-R)+" 0 A"+R+" "+R+" 0 0 1 "+R+" 0 A"+R+" "+R+" 0 0 1 "+(-R)+" 0";
+const loop = sv("path",{d:circ,stroke:DAWN,"stroke-width":L.stroke,pathLength:1,"stroke-dasharray":"1 1","vector-effect":"non-scaling-stroke"},G);
+const upper = sv("path",{d:"M"+(-R)+" 0 A"+R+" "+R+" 0 0 1 "+R+" 0",stroke:DAWN,"stroke-width":L.stroke,"vector-effect":"non-scaling-stroke"},G);
+const markLine = sv("line",{x1:-R*1.75,y1:0,x2:R*1.75,y2:0,stroke:DAWN,"stroke-width":L.stroke,"vector-effect":"non-scaling-stroke"},G);
+const nodes = NODES.map((name,i) => { const f=(i+1)/6, [x,y]=pt(f,R), [lx,ly]=pt(f,R+L.labGap), n={f};
+  n.dot = sv("circle",{cx:x,cy:y,r:L.node,fill:NIGHT,stroke:DAWN,"stroke-width":3},G);
+  n.core = sv("circle",{cx:x,cy:y,r:L.node-5,fill:DAWN},G);
+  const c = Math.cos(ang(f)), anchor = Math.abs(c)<.2 ? "middle" : (c>0 ? "start" : "end");
+  n.lab = sv("text",{x:lx,y:ly+L.fLab*.35,"font-size":L.fLab,fill:DAY,"text-anchor":anchor},G); n.lab.textContent = (i+1)+" "+name;
+  return n; });
+/* the last node sits on the start point: put its label below the horizon so it does not cross the line */
+(() => { const m=nodes[2]; m.lab.setAttribute("y", -L.fLab*.9); m.lab.setAttribute("x", R+22);
+  const n=nodes[5]; n.lab.setAttribute("y", L.fLab*1.9); n.lab.setAttribute("x", -R-18); n.lab.setAttribute("text-anchor","end"); })();
+const runner = sv("circle",{cx:0,cy:0,r:L.node+3,fill:DAY},G);
 
 /* End card */
-const end = el("div","end",stage,{left:px(L.cardX),top:"0"});
-const endText = el("div","cap",end,{left:"0",top:px(L.endTop),fontSize:px(L.endSize)}); endText.innerHTML = ["Someone has to","draw the line."].join(sep);
+const end = el("div","",stage,{position:"absolute",left:px(L.padX),top:"0"});
+const endText = el("div","cap",end,{left:"0",top:px(L.endTop),fontSize:px(L.endSize)});
+endText.innerHTML = PORTRAIT ? "The future is<br>already here.<br><em>Put it to work.</em>" : "The future is already here.<br><em>Put it to work.</em>";
 const brand = el("div","",end,{position:"absolute",left:"0",top:px(L.brandY)});
-const mk = el("div","mark",brand,{left:"0",top:"0",width:px(L.markS),height:px(L.markS),gap:px(5)});
-el("b","",mk,{fontSize:px(L.markS*.44)}).textContent="VE"; el("i","",mk,{width:px(L.markS*.52),height:px(4)}); el("i","",mk,{width:px(L.markS*.52),height:px(4)});
-el("div","bname",brand,{left:px(L.markS+30),top:px(4),fontSize:px(L.markS*.5),lineHeight:"1.1"}).textContent="Vikas Erraballi";
-el("div","burl",brand,{left:px(L.markS+32),top:px(L.markS*.6),fontSize:px(L.markS*.3),lineHeight:"1.1"}).textContent="erraballi.ai";
-el("div","",brand,{position:"absolute",left:"0",top:px(L.markS+34),fontFamily:"Inter",fontWeight:500,fontSize:px(PORTRAIT?34:32),whiteSpace:"nowrap",color:"#4A5560"}).innerHTML = PORTRAIT ? "Practical AI for owner-run<br>and mid-sized companies" : "Practical AI for owner-run and mid-sized companies";
+el("div","bname",brand,{left:px(L.markS+34),top:px(6),fontSize:px(L.fName),lineHeight:"1.1"}).textContent="Vikas Erraballi";
+el("div","burl",brand,{left:px(L.markS+36),top:px(L.fName*1.3),fontSize:px(L.fUrl),lineHeight:"1.1"}).textContent="erraballi.ai";
+el("div","btag",brand,{left:"0",top:px(L.markS+40),fontSize:px(L.fTag),lineHeight:"1.3"}).innerHTML = PORTRAIT ? "Practical AI for owner-run<br>and mid-sized companies" : "Practical AI for owner-run and mid-sized companies";
 const credit = el("div","credit",end,{left:"0",top:px(L.creditY),fontSize:px(L.fCredit)}); credit.textContent = "Built in code with Claude · Checked by a person";
-
-/* Stage-level copy of the line, so it can leave the ledger and become the end card's rule */
-const sv = document.createElementNS(NS,"svg"); sv.setAttribute("class","ov"); sv.setAttribute("width",L.W); sv.setAttribute("height",L.H); stage.appendChild(sv);
-const LINE_OVER = 22, lineLen = L.cardW + LINE_OVER*2;
-const lineD = handLine(0,0,lineLen,0,7,2.6);
-const endLine = path(sv, lineD, INK, L.stroke+1); endLine.setAttribute("vector-effect","non-scaling-stroke");
-
-let M = null;  /* ink marks; built after fonts load because they follow measured text */
-function buildMarks(){
-  const w = r => r.task.offsetWidth, h = L.rowH, sw = L.stroke;
-  const r5 = mon.rows[4], r8 = mon.rows[7];
-  M = {};
-  M.under5 = path(mon.svg, handLine(taskX-4, r5.cy+L.fTask*.62, taskX+w(r5)+6, r5.cy+L.fTask*.60, 11), INK, sw);
-  M.circle8 = path(mon.svg, handEllipse(taskX+w(r8)/2, r8.cy, w(r8)/2+(PORTRAIT?17:26), h*.47, 5), INK, sw);
-  r8.note.textContent = "paid twice"; r8.note.style.left = px(taskX+w(r8)+58);
-  const zero = document.getElementById("zero"), zx = monErr.offsetLeft + zero.offsetLeft, zw = zero.offsetWidth, ty = L.totalH/2-3;
-  M.strike0 = path(mon.svg, handLine(zx-7, slotY(SLOTS)+ty+L.fTot*.34, zx+zw+7, slotY(SLOTS)+ty-L.fTot*.34, 3, 1), INK, sw);
-  monOne.style.left = px(markCx - L.fNote*.2); monOne.style.top = px(-L.fNote*.06);
-  /* Tuesday */
-  M.line = path(tue.svg, "M0 0", INK, sw+1); M.line.setAttribute("d", lineD); M.line.setAttribute("transform","translate("+(-LINE_OVER)+" "+lineY+")");
-  const bs = h*.5;
-  M.box = payRows.map((r,i) => path(tue.svg, "M"+(markCx-bs/2)+" "+(r.cy-bs/2)+" h"+bs+" v"+bs+" h"+(-bs)+" Z", INK, sw-1.5));
-  M.ok = path(tue.svg, tickPath(markCx+2, payRows[0].cy-2, h*.5), INK, sw+1);
-  M.x1 = path(tue.svg, handLine(markCx-bs*.5, payRows[1].cy-bs*.5, markCx+bs*.5, payRows[1].cy+bs*.5, 21, 1), INK, sw+1);
-  M.x2 = path(tue.svg, handLine(markCx+bs*.5, payRows[1].cy-bs*.5, markCx-bs*.5, payRows[1].cy+bs*.5, 22, 1), INK, sw+1);
-  M.strikeP = path(tue.svg, handLine(taskX-8, payRows[1].cy+3, taskX+w(payRows[1])+10, payRows[1].cy-2, 23), INK, sw);
-  payRows[0].note.textContent = "approved"; payRows[0].note.style.left = px(taskX+w(payRows[0])+44);
-  payRows[1].note.textContent = "duplicate"; payRows[1].note.style.left = px(taskX+w(payRows[1])+44);
-  const fw = tueFig.offsetWidth, by = slotY(SLOTS)+L.totalH/2+L.fFig*.5;
-  M.d1 = path(tue.svg, handLine(L.padX-4, by+2, L.padX+fw+8, by, 31, 1.6), INK, sw);
-  M.d2 = path(tue.svg, handLine(L.padX-2, by+2+sw*2.6, L.padX+fw+5, by+sw*2.6, 32, 1.6), INK, sw);
-  M.endW = endText.offsetWidth;
-}
+/* where the loop lands to become the mark: arc over a short line */
+const MARK = { x:L.padX+L.markS/2, y:L.brandY+L.markS*.72, s:(L.markS*.29)/R };
 
 /* ---------- render: everything on screen is set from t ---------- */
-function rowAt(r, t, a, speed){
-  const k = (t-a)*speed; const pin = eo(clamp(k/.2));
-  r.el.style.opacity = pin; r.el.style.transform = "translateY("+((1-pin)*10).toFixed(2)+"px)";
-  r.bar.style.opacity = (k>0 && k<.62) ? 1 : 0;
-  
-  if(r.tick) draw(r.tick, clamp((k-.38)/.22));
+function loopFraction(t){            /* how far round the first lap has been drawn */
+  let f = 0;
+  for(let i=0;i<6;i++){ f = Math.max(f, (i + eio(P(t, T.nodes[i]-0.75, 0.75)))/6 * (t>=T.nodes[i]-0.75 ? 1 : 0)); }
+  return f;
 }
-function noteAt(n, t, a, rot){ const p = eo(P(t,a,.3)); n.style.opacity = p; n.style.transform = "translateY("+((1-p)*6).toFixed(2)+"px) rotate("+(rot||-2)+"deg)"; }
-
 function render(t){
-  if(!M) return;
   t = Math.max(0, Math.min(T.END, t));
+  const g = eio(P(t,T.endOut,.9));                       /* 0 = film, 1 = end card */
   CAPS.forEach(c => { const i = eo(P(t,c.a,.35)), o = P(t,c.b,.3); c.el.style.opacity = i*(1-o); c.el.style.transform = "translateY("+((1-i)*14).toFixed(2)+"px)"; });
-  newline.style.opacity = eo(P(t,T_NEWLINE,.35));
 
-  /* Monday */
-  const sw = P(t,T.swap,T.swapDur), swOut = clamp(sw*2), swIn = clamp(sw*2-1);
-  mon.el.style.opacity = 1-swOut; mon.el.style.visibility = swOut>=1?"hidden":"visible";
-  const dim = 1 - .76*eo(P(t,T.dim,.5));
-  let clock = MON[0][0];
-  mon.rows.forEach((r,i) => { rowAt(r,t,T.monRows[i],1); if(t>=T.monRows[i]) clock = r.time;
-    if(i!==4 && i!==7){ r.el.style.opacity = r.el.style.opacity*dim; r.tick.style.opacity = dim; } });
-  mon.clock.textContent = "Monday " + clock;
-  const mt = eo(P(t,T.monTotal,.4)); monFig.style.opacity = mt; monErr.style.opacity = mt;
-  draw(M.under5, eo(P(t,T.under5,.35))); draw(M.circle8, eio(P(t,T.circle8,.55)));
-  noteAt(mon.rows[7].note, t, T.note8);
-  draw(M.strike0, eo(P(t,T.strike0,.25))); noteAt(monOne, t, T.one, -4);
+  /* horizon: draws in, then steps back when the loop starts, then leaves */
+  const hz = eio(P(t,T.horizon,1.6));
+  horizon.setAttribute("stroke-dashoffset",(1-hz).toFixed(4));
+  horizon.style.opacity = (1 - .55*eo(P(t,T.dot,.6))) * (1-g);
 
-  /* Tuesday */
-  const eout = P(t,T.endOut,.5);
-  tue.el.style.opacity = swIn*(1-eout); tue.el.style.visibility = (swIn<=0||eout>=1)?"hidden":"visible";
-  tue.gap.forEach(g => g.style.opacity = 1-P(t,T.line,.3));
-  let c2 = TUE[0][0];
-  tue.rows.forEach((r,i) => { const a = i<TUE.length ? T.tueRows[i] : T.pay[i-TUE.length]; rowAt(r,t,a,i<TUE.length?2.4:1.3); if(t>=a) c2 = r.time; });
-  tue.clock.textContent = "Tuesday " + c2;
-  const showStage = t>=T.endOut;
-  draw(M.line, showStage ? 0 : eio(P(t,T.line,.8)));
-  const lb = eo(P(t,T.labels,.35)); labUp.style.opacity = lb; labDn.style.opacity = lb;
-  M.box.forEach((b,i) => draw(b, eo(P(t,T.pay[i]+.2,.3))));
-  draw(M.ok, eo(P(t,T.approve,.35))); noteAt(payRows[0].note, t, T.approve+.3);
-  draw(M.strikeP, eo(P(t,T.stop,.35))); draw(M.x1, eo(P(t,T.stop+.3,.18))); draw(M.x2, eo(P(t,T.stop+.45,.18))); noteAt(payRows[1].note, t, T.stop+.5);
-  const tt = eo(P(t,T.tueTotal,.4)); tueFig.style.opacity = tt; tueRest.style.opacity = tt;
-  draw(M.d1, eo(P(t,T.dbl,.3))); draw(M.d2, eo(P(t,T.dbl+.3,.3)));
+  /* the loop */
+  const f1 = loopFraction(t);
+  const lap2 = eio(P(t,T.lap2,T.lap2Dur));
+  loop.setAttribute("stroke-dashoffset",(1-f1).toFixed(4));
+  loop.style.visibility = f1>0 ? "visible" : "hidden";
+  track.style.opacity = eo(P(t,T.dot,.6)) * .9 * (1-g);
+  const below = 1-g;                                     /* everything that is not the mark fades */
+  loop.style.opacity = below;
+  upper.style.opacity = g; markLine.style.opacity = g;
+  nodes.forEach((n,i) => { const on = eo(P(t,T.nodes[i]-.1,.35));
+    const pass = lap2>0 && lap2<1 ? Math.max(0, 1-Math.abs(lap2-n.f)*9) : 0;   /* pulse as the second lap passes */
+    const k = 1 + .9*pass + .5*(1-eo(P(t,T.nodes[i],.5)))*on;
+    n.dot.style.opacity = on*below; n.core.style.opacity = on*below; n.lab.style.opacity = on*below;
+    n.dot.setAttribute("r",(L.node*k).toFixed(2)); });
+  const rf = t<T.lap2 ? f1 : lap2;                        /* where the runner is */
+  const [rx,ry] = pt(rf,R);
+  runner.setAttribute("cx",rx.toFixed(2)); runner.setAttribute("cy",ry.toFixed(2));
+  runner.style.opacity = eo(P(t,T.dot,.4)) * (1-P(t,T.lap2+T.lap2Dur+.2,.5));
 
-  /* End card: the line leaves the ledger and stays */
-  const g = eio(P(t,T.endOut,.7));
-  const x0 = L.cardX-LINE_OVER, y0 = L.cardTop+lineY, x1 = L.cardX, y1 = L.endLineY, s1 = M.endW/lineLen;
-  endLine.setAttribute("transform","translate("+(x0+(x1-x0)*g).toFixed(2)+" "+(y0+(y1-y0)*g).toFixed(2)+") scale("+(1+(s1-1)*g).toFixed(4)+" 1)");
-  draw(endLine, showStage ? 1 : 0);
+  /* the loop becomes the mark */
+  const x = L.cx+(MARK.x-L.cx)*g, y = L.cy+(MARK.y-L.cy)*g, s = 1+(MARK.s-1)*g;
+  G.setAttribute("transform","translate("+x.toFixed(2)+" "+y.toFixed(2)+") scale("+s.toFixed(4)+")");
+
   const et = eo(P(t,T.endText,.5)); endText.style.opacity = et; endText.style.transform = "translateY("+((1-et)*14).toFixed(2)+"px)";
   brand.style.opacity = eo(P(t,T.brand,.5)); credit.style.opacity = eo(P(t,T.credit,.5));
 }
@@ -289,13 +176,13 @@ function render(t){
 /* ---------- run ---------- */
 function fit(){ if(Q.get("capture")) return; const k = Math.min(innerWidth/L.W, innerHeight/L.H);
   stage.style.transform = "translate("+((innerWidth-L.W*k)/2)+"px,"+((innerHeight-L.H*k)/2)+"px) scale("+k+")"; }
-window.DURATION = T.END; window.SCENES = [0, T.swap, T.endOut, T.END]; window.seek = t => render(t);
-document.fonts.ready.then(() => Promise.all(["500 20px Newsreader","italic 500 20px Newsreader","600 20px Newsreader","500 20px Inter","400 20px 'IBM Plex Mono'","500 20px 'IBM Plex Mono'"].map(f => document.fonts.load(f)))).then(() => {
-  buildMarks(); fit(); addEventListener("resize", fit);
+window.DURATION = T.END; window.SCENES = [0, T.lap2, T.endOut, T.END]; window.seek = t => render(t);
+document.fonts.ready.then(() => Promise.all(["600 20px 'Space Grotesk'","500 20px 'Space Grotesk'","500 20px Inter","500 20px 'IBM Plex Mono'"].map(f => document.fonts.load(f)))).then(() => {
+  fit(); addEventListener("resize", fit);
   if(Q.get("capture")){ render(0); window.READY = true; return; }
   if(Q.has("t")){ render(parseFloat(Q.get("t"))); window.READY = true; return; }
-  let t0 = performance.now(); const loop = now => { render((now-t0)/1000); requestAnimationFrame(loop); };
-  addEventListener("click", () => { t0 = performance.now(); }); requestAnimationFrame(loop); window.READY = true;
+  let t0 = performance.now(); const loopFn = now => { render(((now-t0)/1000) % (T.END+1)); requestAnimationFrame(loopFn); };
+  addEventListener("click", () => { t0 = performance.now(); }); requestAnimationFrame(loopFn); window.READY = true;
 });
 </script>
 </body>
