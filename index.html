@@ -69,6 +69,9 @@ nav a:hover{color:var(--green)}
 .btn{display:inline-block; background:var(--ink); color:var(--paper); padding:14px 22px; text-decoration:none; font-weight:600; font-size:16px}
 .btn:hover{background:var(--green); color:#fff}
 .cta .email{font-family:var(--mono); font-size:15px; color:var(--muted)}
+.film{margin:0}
+.film video{display:block; width:100%; height:auto; aspect-ratio:16/9; background:#F5F2EA; border:1px solid var(--rule)}
+@media (max-width:640px){ .film video{aspect-ratio:4/5} }
 
 /* Proof strip */
 .proof{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:28px}
@@ -151,6 +154,23 @@ footer{padding-block:32px 48px; border-top:4px double var(--rule); display:flex;
   <div class="hero" id="top">
     <p class="label">Practical AI for owner-run and mid-sized companies</p>
     <h1>You run the business. I'll make AI work in it.</h1>
+    <figure class="film">
+      <!-- Hero film. Source: hero/index.html. Each source needs "no-preference", so under prefers-reduced-motion no source matches and only the poster shows. -->
+      <video id="film" muted autoplay playsinline disableremoteplayback preload="metadata" poster="hero/poster-landscape.jpg"
+        aria-label="Silent film, 30 seconds. On Monday an AI does a company's morning paperwork before anyone is in, pays one invoice twice and reports no errors. On Tuesday a person has drawn one line: above it the AI works alone, below it the AI asks first. The duplicate payment is stopped. Closing words: Someone has to draw the line.">
+        <source media="(prefers-reduced-motion: no-preference) and (max-width: 640px)" src="hero/hero-portrait.webm" type="video/webm">
+        <source media="(prefers-reduced-motion: no-preference) and (max-width: 640px)" src="hero/hero-portrait.mp4" type="video/mp4">
+        <source media="(prefers-reduced-motion: no-preference)" src="hero/hero-landscape.webm" type="video/webm">
+        <source media="(prefers-reduced-motion: no-preference)" src="hero/hero-landscape.mp4" type="video/mp4">
+      </video>
+      <script>
+      (function(){
+        var v = document.getElementById("film");
+        if (matchMedia("(max-width: 640px)").matches) v.poster = "hero/poster-portrait.jpg";
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.preload = "none"; v.pause(); }
+      })();
+      </script>
+    </figure>
     <p class="lede">I was the first AI leader at a 350-person company, a $5.8B bank with no AI team and no AI policy. Within 15 months a third of the staff used AI every day, under written rules that kept customer data safe. Now I do the same for companies that want real results from AI, built with their own people, at a price they know before we start.</p>
     <div class="cta">
       <a class="btn" href="mailto:vikas@erraballi.org?subject=Intro%20call">Book a 30-minute call</a>
