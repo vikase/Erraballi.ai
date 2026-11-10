@@ -119,8 +119,14 @@ footer{padding-block:32px 48px; border-top:4px double var(--rule); display:flex;
 @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
 .results strong{font-weight:600}
 #small .facts a{font-weight:500}
-.shelf{font-size:26px; padding-top:18px; border-top:4px double var(--green)}
-.shelf-note{color:var(--muted); font-size:15.5px; max-width:62ch; margin-top:-16px}
+.shelves{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:40px 56px}
+.shelf{font-family:var(--mono); font-size:13px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--green); padding-bottom:12px; border-bottom:4px double var(--green)}
+.index{list-style:none; margin:0; padding:0}
+.index li{display:flex; justify-content:space-between; align-items:baseline; gap:6px 20px; padding:14px 0; border-bottom:1px solid var(--rule)}
+.index .t{font-family:var(--display); font-size:20px; line-height:1.25; min-width:0}
+.index .k{font-family:var(--mono); font-size:12px; color:var(--muted); white-space:nowrap; flex:none}
+@media (max-width:820px){ .shelves{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:440px){ .index li{flex-direction:column; gap:2px} }
 </style>
 <style>body{margin:0}</style>
 </head>
@@ -246,32 +252,27 @@ footer{padding-block:32px 48px; border-top:4px double var(--rule); display:flex;
   <section id="writing">
     <p class="label">Writing</p>
     <h2>How I think about this work</h2>
-
+    <div class="shelves">
+    <div>
     <h3 class="shelf" id="field">Field work</h3>
-    <p class="shelf-note">For the people who run the business: what worked, what it cost and how to repeat it.</p>
-    <ul class="results">
-      <li><strong>From no policy to a third of staff using AI daily.</strong> The full case study of standing up AI at a 350-person bank. Coming soon.</li>
+    <ul class="index">
+      <li><span class="t">From no policy to a third of staff using AI daily</span><span class="k">Case study · soon</span></li>
+      <li><span class="t">Examiner-ready AI</span><span class="k">Playbook · soon</span></li>
+      <li><span class="t">Validate, pilot, scale</span><span class="k">Playbook · soon</span></li>
+      <li><span class="t">Fund AI like a portfolio</span><span class="k">Playbook · soon</span></li>
+      <li><span class="t">Governing AI agents in a bank</span><span class="k">Paper · in progress</span></li>
+      <li><span class="t">Running AI bets like a trading book</span><span class="k">Paper · in progress</span></li>
     </ul>
-    <p class="label">Playbooks · one page each · coming soon</p>
-    <ul class="results">
-      <li><strong>Examiner-ready AI.</strong> The policy, risk tiers and evidence a regulated firm needs before its first AI review.</li>
-      <li><strong>Validate, pilot, scale.</strong> Three gates for any AI idea, with the kill rules written down before the money is spent.</li>
-      <li><strong>Fund AI like a portfolio.</strong> How to score, fund and cut AI projects as a set of bets, not a wish list.</li>
-    </ul>
-    <p class="label">Papers in progress</p>
-    <ul class="results">
-      <li><strong>Governing AI agents in a bank.</strong> The new model-risk guidance leaves agents out of scope. What a bank should put in place anyway.</li>
-      <li><strong>Running AI bets like a trading book.</strong> Position sizes, stop-losses and a P&amp;L for every AI project.</li>
-    </ul>
-
+    </div>
+    <div>
     <h3 class="shelf" id="claude">How I run on Claude</h3>
-    <p class="shelf-note">Build notes from my own desk. Each one comes with the real thing: the prompt, the file or the numbers.</p>
-    <ul class="results">
-      <li><strong><a href="https://vikase.github.io/marked-to-market/how-i-built-a-writing-system/">How I built a writing system that argues with me</a></strong>. The AI system I run my own research and writing on, and the controls that keep it honest.</li>
-      <li><strong>One map, many projects.</strong> How I run my work and my household across separate Claude projects: a hub doc in each, one map, and inboxes for hand-offs. Coming soon.</li>
-      <li><strong>Instructions in plain technical English.</strong> Why I write every prompt and hand-off in the controlled English that aircraft maintenance manuals use, and what it fixed. Coming soon.</li>
+    <ul class="index">
+      <li><span class="t"><a href="https://vikase.github.io/marked-to-market/how-i-built-a-writing-system/">How I built a writing system that argues with me</a></span><span class="k">Essay · read</span></li>
+      <li><span class="t">One map, many projects</span><span class="k">Build note · soon</span></li>
+      <li><span class="t">Instructions in plain technical English</span><span class="k">Build note · soon</span></li>
     </ul>
-
+    </div>
+    </div>
     <p class="note">More essays on AI, markets and power at <a href="https://vikase.github.io/marked-to-market/">Marked to Market</a>.</p>
   </section>
 
