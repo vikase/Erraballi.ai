@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Hero film source · erraballi.ai</title>
+<!--
+  Source page for the erraballi.ai hero film "The loop" (Horizon brand). Everything is drawn in code.
+  The whole film is a pure function of time: render(t) sets every style from t, so any frame can be
+  reproduced exactly. Open this page to watch it live. To film it, see render.mjs.
+
+  URL parameters:  ?format=landscape|portrait   (1920x1080 or 1080x1350)
+                   ?capture=1                   (no scaling, no playback; render.mjs drives window.seek)
+                   ?t=12.5                      (hold one frame)
+  The figures are real results from the bank work (see the Career Master). To recut, change T, CAPS and NODES.
+  The earlier ledger film is in git history (commit eaa61bc).
+-->
+<style>
+@font-face{font-family:"Space Grotesk";font-weight:500;src:url(fonts/space-grotesk-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Space Grotesk";font-weight:600;src:url(fonts/space-grotesk-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-weight:400;src:url(fonts/inter-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;src:url(fonts/inter-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:400;src:url(fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:500;src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2")}
+:root{--night:#0B1B2B;--day:#F6F8FA;--dawn:#F2A33A;--mist:#A9B8C8;--line:#5B6E82}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--night);overflow:hidden}
+#stage{position:absolute;left:0;top:0;transform-origin:0 0;background:var(--night);color:var(--day);overflow:hidden;
+  font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.cap{position:absolute;font-family:"Space Grotesk",system-ui,sans-serif;font-weight:600;letter-spacing:-.02em;line-height:1.08;white-space:nowrap}
+.cap em{font-style:normal;color:var(--dawn)}
+svg.ov{position:absolute;left:0;top:0;overflow:visible}
+svg.ov path,svg.ov line{fill:none;stroke-linecap:round}
+svg.ov text{font-family:"IBM Plex Mono",monospace;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
+.bname{position:absolute;font-family:"Space Grotesk",sans-serif;font-weight:600;white-space:nowrap;letter-spacing:-.01em}
+.burl{position:absolute;font-family:"IBM Plex Mono",monospace;color:var(--dawn);white-space:nowrap}
+.btag{position:absolute;font-weight:500;color:var(--mist);white-space:nowrap}
+.credit{position:absolute;font-family:"IBM Plex Mono",monospace;color:var(--mist);text-transform:uppercase;letter-spacing:.11em;white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+"use strict";
+const Q = new URLSearchParams(location.search);
+const FORMAT = Q.get("format") || (innerWidth < innerHeight ? "portrait" : "landscape");
+const PORTRAIT = FORMAT === "portrait";
+
+/* ---------- layout, per format (px at output size) ---------- */
+const L = PORTRAIT ? {
+  W:1080, H:1350, padX:72, capTop:110, capSize:78, cx:540, cy:880, R:270, fLab:25, labGap:44, stroke:5, node:11,
+  endTop:230, endSize:92, brandY:650, markS:120, fName:60, fUrl:34, fTag:33, creditY:1250, fCredit:21
+} : {
+  W:1920, H:1080, padX:140, capTop:196, capSize:84, cx:1400, cy:540, R:290, fLab:23, labGap:44, stroke:5, node:11,
+  endTop:230, endSize:104, brandY:600, markS:120, fName:60, fUrl:34, fTag:32, creditY:968, fCredit:20
+};
+
+/* ---------- timeline (seconds). Change these to recut. ---------- */
+const T = {
+  horizon:0.3, dot:2.9,
+  nodes:[4.8, 7.6, 9.8, 12.6, 15.0, 17.4],   /* when each step of the loop lands */
+  lap2:20.0, lap2Dur:2.3,
+  endOut:25.4, endText:25.9, brand:26.5, credit:27.0, END:30.0
+};
+const NODES = ["Listen","Read","Find","Act","Keep","Improve"];
+const CAPS = [
+  {a:0.4,  b:2.6,  h:["The future is","already here."]},
+  {a:2.8,  b:4.6,  h:["I put it to work."]},
+  {a:4.8,  b:7.4,  h:["<em>1,226</em> customers","told a bank what","was wrong."]},
+  {a:7.6,  b:9.6,  h:["AI read","every response."]},
+  {a:9.8,  b:12.4, h:["About 40 clients","at risk. <em>$300M+</em>"]},
+  {a:12.6, b:14.8, h:["Every banker got","a call plan."]},
+  {a:15.0, b:17.2, h:["None of the","top tier left."]},
+  {a:17.4, b:19.8, h:["The complaints","rewrote the roadmap."]},
+  {a:20.0, b:22.0, h:["Then it went","around again."]},
+  {a:22.2, b:25.2, h:["The first version","is the worst it","will ever be."]}
+];
+
+/* ---------- helpers ---------- */
+const clamp = x => Math.max(0, Math.min(1, x));
+const P = (t,a,d) => clamp((t-a)/d);
+const eo = p => 1-Math.pow(1-p,3);
+const eio = p => p<.5 ? 4*p*p*p : 1-Math.pow(-2*p+2,3)/2;
+const px = n => n+"px";
+const el = (tag, cls, parent, css) => { const e=document.createElement(tag); if(cls) e.className=cls; if(css) Object.assign(e.style,css); if(parent) parent.appendChild(e); return e; };
+const NS = "http://www.w3.org/2000/svg";
+const sv = (tag, attrs, parent) => { const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; };
+const NIGHT="#0B1B2B", DAY="#F6F8FA", DAWN="#F2A33A", MIST="#A9B8C8", LINE="#5B6E82";
+
+/* The loop starts at the left point on the horizon, goes over the top, and comes back underneath.
+   f is the fraction of the way round (0..1). */
+const ang = f => Math.PI - f*2*Math.PI;                 /* screen angle, y up */
+const pt = (f, r) => [Math.cos(ang(f))*r, -Math.sin(ang(f))*r];
+
+/* ---------- build ---------- */
+const stage = document.getElementById("stage");
+stage.style.width=px(L.W); stage.style.height=px(L.H);
+CAPS.forEach(c => { c.el = el("div","cap",stage,{left:px(L.padX),top:px(L.capTop),fontSize:px(L.capSize)}); c.el.innerHTML=c.h.join("<br>"); });
+
+const svg = sv("svg",{class:"ov",width:L.W,height:L.H},stage);
+const horizon = sv("line",{x1:0,y1:L.cy,x2:L.W,y2:L.cy,stroke:DAWN,"stroke-width":2,pathLength:1,"stroke-dasharray":"1 1"},svg);
+const G = sv("g",{},svg);                                 /* the loop, in its own coordinates around 0,0 */
+const R = L.R;
+const track = sv("circle",{cx:0,cy:0,r:R,fill:"none",stroke:LINE,"stroke-width":1.5,"vector-effect":"non-scaling-stroke"},G);
+const circ = "M"+(-R)+" 0 A"+R+" "+R+" 0 0 1 "+R+" 0 A"+R+" "+R+" 0 0 1 "+(-R)+" 0";
+const loop = sv("path",{d:circ,stroke:DAWN,"stroke-width":L.stroke,pathLength:1,"stroke-dasharray":"1 1","vector-effect":"non-scaling-stroke"},G);
+const upper = sv("path",{d:"M"+(-R)+" 0 A"+R+" "+R+" 0 0 1 "+R+" 0",stroke:DAWN,"stroke-width":L.stroke,"vector-effect":"non-scaling-stroke"},G);
+const markLine = sv("line",{x1:-R*1.75,y1:0,x2:R*1.75,y2:0,stroke:DAWN,"stroke-width":L.stroke,"vector-effect":"non-scaling-stroke"},G);
+const nodes = NODES.map((name,i) => { const f=(i+1)/6, [x,y]=pt(f,R), [lx,ly]=pt(f,R+L.labGap), n={f};
+  n.dot = sv("circle",{cx:x,cy:y,r:L.node,fill:NIGHT,stroke:DAWN,"stroke-width":3},G);
+  n.core = sv("circle",{cx:x,cy:y,r:L.node-5,fill:DAWN},G);
+  const c = Math.cos(ang(f)), anchor = Math.abs(c)<.2 ? "middle" : (c>0 ? "start" : "end");
+  n.lab = sv("text",{x:lx,y:ly+L.fLab*.35,"font-size":L.fLab,fill:DAY,"text-anchor":anchor},G); n.lab.textContent = (i+1)+" "+name;
+  return n; });
+/* the last node sits on the start point: put its label below the horizon so it does not cross the line */
+(() => { const m=nodes[2]; m.lab.setAttribute("y", -L.fLab*.9); m.lab.setAttribute("x", R+22);
+  const n=nodes[5]; n.lab.setAttribute("y", L.fLab*1.9); n.lab.setAttribute("x", -R-18); n.lab.setAttribute("text-anchor","end"); })();
+const runner = sv("circle",{cx:0,cy:0,r:L.node+3,fill:DAY},G);
+
+/* End card */
+const end = el("div","",stage,{position:"absolute",left:px(L.padX),top:"0"});
+const endText = el("div","cap",end,{left:"0",top:px(L.endTop),fontSize:px(L.endSize)});
+endText.innerHTML = PORTRAIT ? "The future is<br>already here.<br><em>Put it to work.</em>" : "The future is already here.<br><em>Put it to work.</em>";
+const brand = el("div","",end,{position:"absolute",left:"0",top:px(L.brandY)});
+el("div","bname",brand,{left:px(L.markS+34),top:px(6),fontSize:px(L.fName),lineHeight:"1.1"}).textContent="Vikas Erraballi";
+el("div","burl",brand,{left:px(L.markS+36),top:px(L.fName*1.3),fontSize:px(L.fUrl),lineHeight:"1.1"}).textContent="erraballi.ai";
+el("div","btag",brand,{left:"0",top:px(L.markS+40),fontSize:px(L.fTag),lineHeight:"1.3"}).innerHTML = PORTRAIT ? "Practical AI for owner-run<br>and mid-sized companies" : "Practical AI for owner-run and mid-sized companies";
+const credit = el("div","credit",end,{left:"0",top:px(L.creditY),fontSize:px(L.fCredit)}); credit.textContent = "Built in code with Claude · Checked by a person";
+/* where the loop lands to become the mark: arc over a short line */
+const MARK = { x:L.padX+L.markS/2, y:L.brandY+L.markS*.72, s:(L.markS*.29)/R };
+
+/* ---------- render: everything on screen is set from t ---------- */
+function loopFraction(t){            /* how far round the first lap has been drawn */
+  let f = 0;
+  for(let i=0;i<6;i++){ f = Math.max(f, (i + eio(P(t, T.nodes[i]-0.75, 0.75)))/6 * (t>=T.nodes[i]-0.75 ? 1 : 0)); }
+  return f;
+}
+function render(t){
+  t = Math.max(0, Math.min(T.END, t));
+  const g = eio(P(t,T.endOut,.9));                       /* 0 = film, 1 = end card */
+  CAPS.forEach(c => { const i = eo(P(t,c.a,.35)), o = P(t,c.b,.3); c.el.style.opacity = i*(1-o); c.el.style.transform = "translateY("+((1-i)*14).toFixed(2)+"px)"; });
+
+  /* horizon: draws in, then steps back when the loop starts, then leaves */
+  const hz = eio(P(t,T.horizon,1.6));
+  horizon.setAttribute("stroke-dashoffset",(1-hz).toFixed(4));
+  horizon.style.opacity = (1 - .55*eo(P(t,T.dot,.6))) * (1-g);
+
+  /* the loop */
+  const f1 = loopFraction(t);
+  const lap2 = eio(P(t,T.lap2,T.lap2Dur));
+  loop.setAttribute("stroke-dashoffset",(1-f1).toFixed(4));
+  loop.style.visibility = f1>0 ? "visible" : "hidden";
+  track.style.opacity = eo(P(t,T.dot,.6)) * .9 * (1-g);
+  const below = 1-g;                                     /* everything that is not the mark fades */
+  loop.style.opacity = below;
+  upper.style.opacity = g; markLine.style.opacity = g;
+  nodes.forEach((n,i) => { const on = eo(P(t,T.nodes[i]-.1,.35));
+    const pass = lap2>0 && lap2<1 ? Math.max(0, 1-Math.abs(lap2-n.f)*9) : 0;   /* pulse as the second lap passes */
+    const k = 1 + .9*pass + .5*(1-eo(P(t,T.nodes[i],.5)))*on;
+    n.dot.style.opacity = on*below; n.core.style.opacity = on*below; n.lab.style.opacity = on*below;
+    n.dot.setAttribute("r",(L.node*k).toFixed(2)); });
+  const rf = t<T.lap2 ? f1 : lap2;                        /* where the runner is */
+  const [rx,ry] = pt(rf,R);
+  runner.setAttribute("cx",rx.toFixed(2)); runner.setAttribute("cy",ry.toFixed(2));
+  runner.style.opacity = eo(P(t,T.dot,.4)) * (1-P(t,T.lap2+T.lap2Dur+.2,.5));
+
+  /* the loop becomes the mark */
+  const x = L.cx+(MARK.x-L.cx)*g, y = L.cy+(MARK.y-L.cy)*g, s = 1+(MARK.s-1)*g;
+  G.setAttribute("transform","translate("+x.toFixed(2)+" "+y.toFixed(2)+") scale("+s.toFixed(4)+")");
+
+  const et = eo(P(t,T.endText,.5)); endText.style.opacity = et; endText.style.transform = "translateY("+((1-et)*14).toFixed(2)+"px)";
+  brand.style.opacity = eo(P(t,T.brand,.5)); credit.style.opacity = eo(P(t,T.credit,.5));
+}
+
+/* ---------- run ---------- */
+function fit(){ if(Q.get("capture")) return; const k = Math.min(innerWidth/L.W, innerHeight/L.H);
+  stage.style.transform = "translate("+((innerWidth-L.W*k)/2)+"px,"+((innerHeight-L.H*k)/2)+"px) scale("+k+")"; }
+window.DURATION = T.END; window.SCENES = [0, T.lap2, T.endOut, T.END]; window.seek = t => render(t);
+document.fonts.ready.then(() => Promise.all(["600 20px 'Space Grotesk'","500 20px 'Space Grotesk'","500 20px Inter","500 20px 'IBM Plex Mono'"].map(f => document.fonts.load(f)))).then(() => {
+  fit(); addEventListener("resize", fit);
+  if(Q.get("capture")){ render(0); window.READY = true; return; }
+  if(Q.has("t")){ render(parseFloat(Q.get("t"))); window.READY = true; return; }
+  let t0 = performance.now(); const loopFn = now => { render(((now-t0)/1000) % (T.END+1)); requestAnimationFrame(loopFn); };
+  addEventListener("click", () => { t0 = performance.now(); }); requestAnimationFrame(loopFn); window.READY = true;
+});
+</script>
+</body>
+</html>
