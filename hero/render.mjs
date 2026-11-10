@@ -1,6 +1,7 @@
 // Films hero/index.html into video. Usage:
 //   node hero/render.mjs landscape|portrait [outDir]        full render, one file per scene, then joined
 //   node hero/render.mjs landscape|portrait outDir 3.5 11.9 stills only, at the given times
+//   ONLY=0 node hero/render.mjs landscape outDir           film one scene again (0 Monday, 1 Tuesday, 2 end card)
 // Needs: Node, the "playwright" package, Chrome, ffmpeg. Set CHROME to the browser path if it is not /usr/bin/google-chrome.
 import { createRequire } from "node:module";
 import { spawn } from "node:child_process";
@@ -30,6 +31,7 @@ if (stills.length) {
   const scenes = await page.evaluate("window.SCENES");
   const files = [];
   for (let s = 0; s < scenes.length - 1; s++) {
+    if (process.env.ONLY && Number(process.env.ONLY) !== s) { files.push(join(out, `${format}-scene${s}.mp4`)); continue; }  // ONLY=0 films one scene again and keeps the others
     const f0 = Math.round(scenes[s] * FPS), f1 = Math.round(scenes[s + 1] * FPS) + (s === scenes.length - 2 ? 1 : 0);
     const tmp = join(out, `${format}-scene${s}.tmp.mp4`), fin = join(out, `${format}-scene${s}.mp4`);
     const ff = spawn("ffmpeg", ["-y", "-loglevel", "error", "-f", "image2pipe", "-framerate", String(FPS), "-c:v", "mjpeg", "-i", "-",

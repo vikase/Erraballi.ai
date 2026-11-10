@@ -47,6 +47,7 @@ html,body{margin:0;height:100%;background:var(--paper);overflow:hidden}
 .total{position:absolute;left:0;width:100%;border-top:4px double var(--green);font-family:"IBM Plex Mono",monospace}
 .total span{position:absolute;white-space:nowrap}
 .total .fig{font-weight:500}
+.total span span{position:static}
 svg.ov{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
 svg.ov path{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .end{position:absolute}
@@ -69,11 +70,11 @@ const PORTRAIT = FORMAT === "portrait";
 /* ---------- layout, per format (px at output size) ---------- */
 const L = PORTRAIT ? {
   W:1080, H:1350, cardX:48, cardW:984, cardTop:292, headH:66, rowH:84, totalH:104, padX:28, timeW:130, markW:56,
-  capTop:66, capSize:76, fTime:28, fTask:38, fQty:36, fHead:22, fNote:42, fLab:27, fFig:44, fTot:30, stroke:5, rule:2,
+  capTop:66, capSize:76, fTime:30, fTask:38, fQty:36, fHead:23, fNote:46, fLab:32, fFig:44, fTot:34, stroke:5, rule:2,
   endTop:300, endSize:106, endLineY:590, brandY:690, markS:104, creditY:1252, fCredit:21
 } : {
   W:1920, H:1080, cardX:180, cardW:1560, cardTop:226, headH:54, rowH:62, totalH:92, padX:36, timeW:150, markW:56,
-  capTop:66, capSize:84, fTime:25, fTask:32, fQty:30, fHead:19, fNote:36, fLab:21, fFig:40, fTot:28, stroke:4, rule:1.5,
+  capTop:66, capSize:84, fTime:25, fTask:32, fQty:30, fHead:19, fNote:40, fLab:26, fFig:40, fTot:32, stroke:4, rule:1.5,
   endTop:270, endSize:116, endLineY:450, brandY:560, markS:104, creditY:968, fCredit:20
 };
 const SLOTS = 10;
@@ -81,30 +82,31 @@ const sheetH = L.headH + SLOTS*L.rowH + L.totalH;
 
 /* ---------- timeline (seconds). Change these to recut. ---------- */
 const T = {
-  monRows:[0.5,1.4,2.2,2.9,3.5,4.1,4.6,5.1,5.6,6.1],
-  monTotal:6.9, dim:10.3, under5:10.9, circle8:11.2, note8:11.7, strike0:12.3, one:12.6,
-  swap:15.0, swapDur:0.7,
-  line:16.3, labels:17.0, tueRows:[17.5,17.8,18.1,18.4,18.7,19.0], pay:[19.5,19.9],
-  person:20.4, approve:20.6, stop:21.4, spot:22.5, tueTotal:23.5, dbl:24.0,
-  endOut:26.2, endText:26.8, brand:27.5, credit:28.1, END:31.0
+  monRows:[0.5,1.3,2.0,2.6,3.1,3.5,3.9,4.3,4.7,5.1],
+  monTotal:5.7, dim:8.5, under5:9.1, circle8:9.5, note8:10.1, strike0:10.8, one:11.1,
+  swap:13.7, swapDur:0.6,
+  tueRows:[14.0,14.12,14.24,14.36,14.48,14.6], line:15.0, labels:15.5, pay:[16.5,17.0],
+  approve:18.7, stop:19.9, tueTotal:21.8, dbl:22.6,
+  endOut:24.7, endText:25.1, brand:25.7, credit:26.1, END:30.0
 };
 const CAPS = [
-  {a:0.05, b:2.8,  h:["Monday, 6:04 a.m.","No one&rsquo;s in yet."]},
-  {a:3.0,  b:6.8,  h:["The work is getting done."]},
-  {a:7.1,  b:9.6,  h:["179 tasks.","No errors reported."]},
-  {a:9.8,  b:12.3, h:["Look again."]},
-  {a:12.6, b:14.9, h:["It graded its own work."]},
-  {a:15.5, b:23.3, h:["Tuesday. Same work.","<span id='newline'>One new line.</span>"]},
-  {a:23.6, b:26.1, h:["Now the total","means something."]}
+  {a:0.05, b:2.3,  h:["Monday, 6:04 a.m.","No one&rsquo;s in yet."]},
+  {a:2.5,  b:5.5,  h:["The AI is doing","the paperwork."]},
+  {a:5.8,  b:7.9,  h:["179 tasks.","No errors reported."]},
+  {a:8.1,  b:11.0, h:["Look again."]},
+  {a:11.3, b:13.5, h:["It graded its own work."]},
+  {a:14.0, b:18.0, h:["Tuesday.","<span id='newline'>One new line.</span>"]},
+  {a:18.2, b:21.6, h:["You approve one.","You stop one."]},
+  {a:22.0, b:24.6, h:["Now the total","means something."]}
 ];
-const T_NEWLINE = 16.6;
+const T_NEWLINE = T.line;
 
 /* ---------- the ledgers. Example figures only; each total is the sum of its rows. ---------- */
 const MON = [["06:04","Overnight orders entered",38],["06:05","Invoices matched to orders",61],["06:07","Customer emails answered",44],
   ["06:09","Late delivery: customers told",12],["06:10","Invoice 0412 paid",1],["06:12","Renewal contracts read",9],
   ["06:13","Complaints logged",7],["06:15","Invoice 0412 paid",1],["06:16","Stock reorders placed",5],["06:18","Monday sales report written",1]];
-const TUE = [["06:04","Overnight orders entered",41],["06:05","Invoices matched to orders",57],["06:07","Customer emails answered",39],
-  ["06:09","Complaints logged",4],["06:10","Stock reorders placed",8],["06:12","Tuesday sales report written",1]];
+const TUE = [["06:04","Overnight orders entered",52],["06:05","Invoices matched to orders",66],["06:07","Customer emails answered",51],
+  ["06:09","Complaints logged",6],["06:10","Stock reorders placed",9],["06:12","Tuesday sales report written",1]];
 const PAY = [["06:13","Pay invoice 0533"],["06:14","Pay invoice 0533"]];
 const sum = a => a.reduce((s,r)=>s+r[2],0);
 
@@ -147,10 +149,11 @@ const slotY = i => L.headH + i*L.rowH;
 function buildSheet(day, gapSlots){
   const s = {}; s.el = el("div","sheet",stage,{left:px(L.cardX),top:px(L.cardTop),width:px(L.cardW),height:px(sheetH)});
   const head = el("div","head",s.el,{height:px(L.headH),fontSize:px(L.fHead),lineHeight:px(L.headH-4)});
-  el("span","",head,{left:px(L.padX)}).textContent = PORTRAIT ? "An ordinary company · example" : "An ordinary company · example figures";
+  el("span","",head,{left:px(L.padX)}).textContent = "AI work log · example figures";
   s.clock = el("span","clock",head,{right:px(L.padX)}); s.day = day;
-  for(let i=0;i<SLOTS;i++){ if(gapSlots && gapSlots.includes(i)) continue;
-    el("div","slot",s.el,{top:px(slotY(i)),height:px(L.rowH),borderBottomWidth:px(L.rule), borderBottomStyle:"solid"}); }
+  s.gap = [];
+  for(let i=0;i<SLOTS;i++){ const g = gapSlots && gapSlots.includes(i) && i!==gapSlots[gapSlots.length-1];
+    const d = el("div","slot",s.el,{top:px(slotY(i)),height:px(L.rowH),borderBottomWidth:px(L.rule), borderBottomStyle:"solid"}); if(g) s.gap.push(d); }
   s.svg = document.createElementNS(NS,"svg"); s.svg.setAttribute("class","ov"); s.svg.setAttribute("width",L.cardW); s.svg.setAttribute("height",sheetH);
   s.rows = [];
   s.addRow = (slot, time, task, qty) => { const r = {slot, qty};
@@ -171,7 +174,7 @@ function buildSheet(day, gapSlots){
 const mon = buildSheet("Monday");
 MON.forEach((r,i) => { const row = mon.addRow(i, r[0], r[1], r[2]); row.tick = path(mon.svg, tickPath(markCx,row.cy,L.rowH*.42), GREEN, L.stroke); });
 const monFig = el("span","fig",mon.total,{left:px(L.padX),fontSize:px(L.fFig)}); monFig.textContent = sum(MON)+" done";
-const monErr = el("span","",mon.total,{right:px(qtyRight),fontSize:px(L.fTot)}); monErr.innerHTML = "errors reported: <span id='zero'>0</span>";
+const monErr = el("span","",mon.total,{right:px(qtyRight),fontSize:px(L.fTot),fontWeight:500}); monErr.innerHTML = "errors reported: <span id='zero'>0</span>";
 const monOne = el("span","note",mon.total,{fontSize:px(L.fNote*1.25),color:INK}); monOne.textContent = "1";
 
 /* Tuesday: six rows the AI does alone, a two-slot gap for the line, two rows that ask first */
@@ -181,8 +184,8 @@ const lineY = slotY(7);
 const labUp = el("div","lab",tue.el,{left:px(L.padX),top:px(lineY-L.fLab*1.9),fontSize:px(L.fLab),color:GREEN}); labUp.textContent = "AI works alone";
 const labDn = el("div","lab",tue.el,{left:px(L.padX),top:px(lineY+L.fLab*.75),fontSize:px(L.fLab),color:INK}); labDn.textContent = "AI asks first";
 const payRows = PAY.map((r,i) => tue.addRow(8+i, r[0], r[1], null));
-const tueFig = el("span","fig",tue.total,{left:px(L.padX),fontSize:px(L.fFig)}); tueFig.textContent = sum(TUE)+" done";
-const tueRest = el("span","",tue.total,{right:px(L.padX),fontSize:px(L.fTot)}); tueRest.textContent = "1 approved · 1 stopped";
+const tueFig = el("span","fig",tue.total,{left:px(L.padX),fontSize:px(L.fFig)}); tueFig.textContent = (sum(TUE)+1)+" done";  /* six rows the AI did alone, plus the one approved payment */
+const tueRest = el("span","",tue.total,{right:px(L.padX),fontSize:px(L.fTot)}); tueRest.textContent = "1 stopped"; tueRest.style.fontWeight = 500;
 tue.svg.remove(); tue.el.appendChild(tue.svg);
 
 /* End card */
@@ -193,6 +196,7 @@ const mk = el("div","mark",brand,{left:"0",top:"0",width:px(L.markS),height:px(L
 el("b","",mk,{fontSize:px(L.markS*.44)}).textContent="VE"; el("i","",mk,{width:px(L.markS*.52),height:px(4)}); el("i","",mk,{width:px(L.markS*.52),height:px(4)});
 el("div","bname",brand,{left:px(L.markS+30),top:px(4),fontSize:px(L.markS*.5),lineHeight:"1.1"}).textContent="Vikas Erraballi";
 el("div","burl",brand,{left:px(L.markS+32),top:px(L.markS*.6),fontSize:px(L.markS*.3),lineHeight:"1.1"}).textContent="erraballi.ai";
+el("div","",brand,{position:"absolute",left:"0",top:px(L.markS+34),fontFamily:"Inter",fontWeight:500,fontSize:px(PORTRAIT?34:32),whiteSpace:"nowrap",color:"#4A5560"}).innerHTML = PORTRAIT ? "Practical AI for owner-run<br>and mid-sized companies" : "Practical AI for owner-run and mid-sized companies";
 const credit = el("div","credit",end,{left:"0",top:px(L.creditY),fontSize:px(L.fCredit)}); credit.textContent = "Built in code with Claude · Checked by a person";
 
 /* Stage-level copy of the line, so it can leave the ledger and become the end card's rule */
@@ -222,9 +226,6 @@ function buildMarks(){
   M.strikeP = path(tue.svg, handLine(taskX-8, payRows[1].cy+3, taskX+w(payRows[1])+10, payRows[1].cy-2, 23), INK, sw);
   payRows[0].note.textContent = "approved"; payRows[0].note.style.left = px(taskX+w(payRows[0])+44);
   payRows[1].note.textContent = "duplicate"; payRows[1].note.style.left = px(taskX+w(payRows[1])+44);
-  const r4 = tue.rows[3];
-  M.spot = path(tue.svg, handEllipse(markCx+2, r4.cy, h*.46, h*.42, 9), INK, sw);
-  r4.note.textContent = "checked"; r4.note.style.left = px(taskX+w(r4)+44);
   const fw = tueFig.offsetWidth, by = slotY(SLOTS)+L.totalH/2+L.fFig*.5;
   M.d1 = path(tue.svg, handLine(L.padX-4, by+2, L.padX+fw+8, by, 31, 1.6), INK, sw);
   M.d2 = path(tue.svg, handLine(L.padX-2, by+2+sw*2.6, L.padX+fw+5, by+sw*2.6, 32, 1.6), INK, sw);
@@ -236,7 +237,7 @@ function rowAt(r, t, a, speed){
   const k = (t-a)*speed; const pin = eo(clamp(k/.2));
   r.el.style.opacity = pin; r.el.style.transform = "translateY("+((1-pin)*10).toFixed(2)+"px)";
   r.bar.style.opacity = (k>0 && k<.62) ? 1 : 0;
-  if(r.q) r.q.textContent = Math.round(r.qty*eo(clamp((k-.08)/.34)));
+  
   if(r.tick) draw(r.tick, clamp((k-.38)/.22));
 }
 function noteAt(n, t, a, rot){ const p = eo(P(t,a,.3)); n.style.opacity = p; n.style.transform = "translateY("+((1-p)*6).toFixed(2)+"px) rotate("+(rot||-2)+"deg)"; }
@@ -248,13 +249,12 @@ function render(t){
   newline.style.opacity = eo(P(t,T_NEWLINE,.35));
 
   /* Monday */
-  const sw = eio(P(t,T.swap,T.swapDur));
-  mon.el.style.transform = "translateX("+(-sw*L.W*.55).toFixed(1)+"px)"; mon.el.style.opacity = 1-sw; mon.el.style.visibility = sw>=1?"hidden":"visible";
+  const sw = P(t,T.swap,T.swapDur), swOut = clamp(sw*2), swIn = clamp(sw*2-1);
+  mon.el.style.opacity = 1-swOut; mon.el.style.visibility = swOut>=1?"hidden":"visible";
   const dim = 1 - .76*eo(P(t,T.dim,.5));
   let clock = MON[0][0];
   mon.rows.forEach((r,i) => { rowAt(r,t,T.monRows[i],1); if(t>=T.monRows[i]) clock = r.time;
     if(i!==4 && i!==7){ r.el.style.opacity = r.el.style.opacity*dim; r.tick.style.opacity = dim; } });
-  if(t>=T.dim) clock = "07:30";
   mon.clock.textContent = "Monday " + clock;
   const mt = eo(P(t,T.monTotal,.4)); monFig.style.opacity = mt; monErr.style.opacity = mt;
   draw(M.under5, eo(P(t,T.under5,.35))); draw(M.circle8, eio(P(t,T.circle8,.55)));
@@ -263,10 +263,10 @@ function render(t){
 
   /* Tuesday */
   const eout = P(t,T.endOut,.5);
-  tue.el.style.transform = "translateX("+((1-sw)*L.W*.55).toFixed(1)+"px)"; tue.el.style.opacity = sw*(1-eout); tue.el.style.visibility = (sw<=0||eout>=1)?"hidden":"visible";
+  tue.el.style.opacity = swIn*(1-eout); tue.el.style.visibility = (swIn<=0||eout>=1)?"hidden":"visible";
+  tue.gap.forEach(g => g.style.opacity = 1-P(t,T.line,.3));
   let c2 = TUE[0][0];
-  tue.rows.forEach((r,i) => { const a = i<TUE.length ? T.tueRows[i] : T.pay[i-TUE.length]; rowAt(r,t,a,i<TUE.length?1.7:1.3); if(t>=a) c2 = r.time; });
-  if(t>=T.person) c2 = "07:30";
+  tue.rows.forEach((r,i) => { const a = i<TUE.length ? T.tueRows[i] : T.pay[i-TUE.length]; rowAt(r,t,a,i<TUE.length?2.4:1.3); if(t>=a) c2 = r.time; });
   tue.clock.textContent = "Tuesday " + c2;
   const showStage = t>=T.endOut;
   draw(M.line, showStage ? 0 : eio(P(t,T.line,.8)));
@@ -274,12 +274,11 @@ function render(t){
   M.box.forEach((b,i) => draw(b, eo(P(t,T.pay[i]+.2,.3))));
   draw(M.ok, eo(P(t,T.approve,.35))); noteAt(payRows[0].note, t, T.approve+.3);
   draw(M.strikeP, eo(P(t,T.stop,.35))); draw(M.x1, eo(P(t,T.stop+.3,.18))); draw(M.x2, eo(P(t,T.stop+.45,.18))); noteAt(payRows[1].note, t, T.stop+.5);
-  draw(M.spot, eio(P(t,T.spot,.5))); noteAt(tue.rows[3].note, t, T.spot+.4);
   const tt = eo(P(t,T.tueTotal,.4)); tueFig.style.opacity = tt; tueRest.style.opacity = tt;
   draw(M.d1, eo(P(t,T.dbl,.3))); draw(M.d2, eo(P(t,T.dbl+.3,.3)));
 
   /* End card: the line leaves the ledger and stays */
-  const g = eio(P(t,T.endOut,.9));
+  const g = eio(P(t,T.endOut,.7));
   const x0 = L.cardX-LINE_OVER, y0 = L.cardTop+lineY, x1 = L.cardX, y1 = L.endLineY, s1 = M.endW/lineLen;
   endLine.setAttribute("transform","translate("+(x0+(x1-x0)*g).toFixed(2)+" "+(y0+(y1-y0)*g).toFixed(2)+") scale("+(1+(s1-1)*g).toFixed(4)+" 1)");
   draw(endLine, showStage ? 1 : 0);
