@@ -179,19 +179,19 @@ header{overflow:hidden}
 <h2 style="margin: 0 0 32px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 30px; line-height: 1.2; max-width: 760px">AI went where the work was, one department at a time.</h2>
 <div style="margin: 0 0 20px 0; background: #0B1B2B; color: #F6F8FA; border-radius: 12px; padding: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 24px 40px">
 <div style="flex: 1.5 1 420px; min-width: 0">
-<video id="clip-meeting" class="clip" muted loop playsinline preload="metadata" poster="clips/meeting/meeting-landscape-poster.jpg" aria-label="A 12-second silent clip. A one-hour meeting is recorded. AI writes it up as a 10-page requirements document, with owners and risks.">
-<source src="clips/meeting/meeting-landscape.webm" type="video/webm"><source src="clips/meeting/meeting-landscape.mp4" type="video/mp4">
+<video id="clip-platform" class="clip" muted loop playsinline preload="metadata" poster="clips/platform/platform-landscape-poster.jpg" aria-label="An 18-second silent clip. A bank is choosing a core banking platform. AI turns each team's discovery into one record. Vendors get the brief, and every demo goes back into the record. AI reads the record before each meeting. At the end, every team sees one comparison through its own view.">
+<source src="clips/platform/platform-landscape.webm" type="video/webm"><source src="clips/platform/platform-landscape.mp4" type="video/mp4">
 </video>
 </div>
 <div style="flex: 1 1 260px; min-width: 0">
-<div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #F2A33A">Projects</div>
-<h3 style="margin: 8px 0 10px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.2">A meeting in, a plan out</h3>
-<p style="margin: 0; font-size: 16px; color: #D5DEE8">A one-hour recorded meeting became a 10-page requirements document, with owners and risks.</p>
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #F2A33A">Choosing a platform</div>
+<h3 style="margin: 8px 0 10px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.2">One record, from discovery to comparison</h3>
+<p style="margin: 0; font-size: 16px; color: #D5DEE8">The bank was choosing a core banking platform. AI turned each team's discovery sessions into one record. Vendors got the brief, every demo went back in, and AI read the record before the next meeting. Each team compared the options through its own lens.</p>
 </div>
 </div>
 <script>
-(function(){var v=document.getElementById("clip-meeting");if(!v)return;
- if(window.matchMedia("(max-width:640px)").matches){v.poster="clips/meeting/meeting-portrait-poster.jpg";v.innerHTML='<source src="clips/meeting/meeting-portrait.webm" type="video/webm"><source src="clips/meeting/meeting-portrait.mp4" type="video/mp4">';v.load();}
+(function(){var v=document.getElementById("clip-platform");if(!v)return;
+ if(window.matchMedia("(max-width:640px)").matches){v.poster="clips/platform/platform-portrait-poster.jpg";v.innerHTML='<source src="clips/platform/platform-portrait.webm" type="video/webm"><source src="clips/platform/platform-portrait.mp4" type="video/mp4">';v.load();}
  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){v.controls=true;return;}
  if("IntersectionObserver" in window){new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){v.play().catch(function(){v.controls=true;});}else{v.pause();}});},{threshold:.35}).observe(v);}
 })();

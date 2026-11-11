@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Clip source: Choosing a platform, on one record · erraballi.ai</title>
+<!--
+  Source page for the 18-second clip "Choosing a platform, on one record" (Horizon brand). Everything is drawn in code.
+  The clip is a pure function of time: render(t) builds every frame from t. Open this page to watch it live.
+  To film it: POSTER=15.4 node clips/render.mjs platform landscape|portrait   (see clips/render.mjs)
+  URL parameters: ?format=landscape|portrait (1600x900 or 1080x1350), ?capture=1, ?t=6.5
+  Story: a bank evaluates core banking platforms. Each team's discovery goes into one record. Vendors get the brief.
+  Each demo goes back into the record. AI reads the record before each meeting. Every team compares through its own lens.
+  Team names, the vendor letters and the scores in the grid are illustrations. Do not name a real vendor. To recut, change T, CAPS, TEAMS, DOCS, DIMS.
+-->
+<style>
+@font-face{font-family:"Space Grotesk";font-weight:600;src:url(../../hero/fonts/space-grotesk-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;src:url(../../hero/fonts/inter-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:500;src:url(../../hero/fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2")}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#0B1B2B;overflow:hidden}
+#stage{position:absolute;left:0;top:0;transform-origin:0 0;background:#0B1B2B;color:#F6F8FA;overflow:hidden;font-family:"Inter",system-ui,sans-serif;font-weight:500;-webkit-font-smoothing:antialiased}
+#stage div{position:absolute;white-space:nowrap}
+.cap{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.cap em{font-style:normal;color:#F2A33A}
+.mono{font-family:"IBM Plex Mono",monospace;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+"use strict";
+const Q=new URLSearchParams(location.search);
+const FORMAT=Q.get("format")||(innerWidth<innerHeight?"portrait":"landscape");
+const PORT=FORMAT==="portrait";
+const L=PORT?{W:1080,H:1350,capX:72,capY:84,capS:70,f:26,mono:20,
+    team:i=>({x:72+(i%3)*320,y:320+Math.floor(i/3)*86,w:296,h:62}),rec:{x:270,y:560,w:540,h:470},
+    ven:i=>({x:72+i*320,y:1120,w:296,h:104}),grid:{x:72,y:330,w:936,h:880}}
+  :{W:1600,H:900,capX:96,capY:76,capS:62,f:23,mono:18,
+    team:i=>({x:96,y:286+i*90,w:290,h:62}),rec:{x:600,y:276,w:400,h:540},
+    ven:i=>({x:1214,y:330+i*156,w:290,h:112}),grid:{x:96,y:286,w:1408,h:540}};
+const TEAMS=["Operations","Lending","Retail","Compliance","IT","Finance"];
+const DOCS=["Pain points","Wish list","Requirements","Vendor brief","Demo notes · A","Demo notes · B","Demo notes · C"];
+const SCORE=[[4,3,5],[5,3,3],[3,5,4],[3,4,5],[2,5,3],[4,2,3]];
+const DIMS=["Daily operations","Lending workflow","Customer experience","Risk and controls","Integration","Cost"];
+const T={team0:0.5,flowIn:1.8,docs:[2.7,3.4,4.1,4.9,8.2,8.7,9.2],ven0:5.2,brief:5.8,demo:7.4,read0:9.9,read1:11.5,
+  cut:11.7,grid0:12.0,lens0:13.7,lensStep:0.6,out:17.4,END:17.9};
+const CAPS=[{a:0.3,b:2.6,h:["Choosing a core","banking platform."]},{a:2.8,b:4.8,h:["AI turned discovery","into <em>one record</em>."]},
+  {a:5.0,b:9.6,h:["Vendors got the brief.","Every demo went back in."]},{a:9.8,b:11.7,h:["Before each meeting,","AI <em>read the record</em>."]},
+  {a:12.0,b:17.4,h:["One comparison.","<em>Every team's</em> view."]}];
+const clamp=x=>Math.max(0,Math.min(1,x)),P=(t,a,d)=>clamp((t-a)/d),eo=p=>1-Math.pow(1-p,3),eio=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+const rnd=i=>{const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)};
+const box=(x,y,w,h,css,inner)=>`<div style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;${css||""}">${inner||""}</div>`;
+const dots=(t,a,dur,ax,ay,bx,by)=>{const fp=P(t,a,dur);if(fp<=0||fp>=1)return"";let h="";const e=eio(fp);
+  for(let k=0;k<5;k++){const q=clamp(e-k*0.05),s=13-k*2;h+=box(ax+(bx-ax)*q-s/2,ay+(by-ay)*q-s/2,s,s,`border-radius:50%;background:#F2A33A;opacity:${(1-k/5)*Math.sin(Math.PI*fp)}`);}return h;};
+
+function render(t){
+  let h="";
+  const all=Math.min(P(t,0,0.3),1-P(t,T.out,T.END-T.out-0.05));
+  for(const c of CAPS){const o=Math.min(eo(P(t,c.a,0.35)),1-P(t,c.b-0.25,0.25));if(o<=0)continue;
+    h+=`<div class="cap" style="left:${L.capX}px;top:${L.capY+(1-o)*14}px;font-size:${L.capS}px;opacity:${o}">${c.h.join("<br>")}</div>`;}
+  const A=1-P(t,T.cut,0.35);                         /* scene A: teams, record, vendors */
+  if(A>0){
+    const r=L.rec,rowH=(r.h-64)/DOCS.length,rIn=PORT?{x:r.x+r.w/2,y:r.y}:{x:r.x,y:r.y+r.h/2},rOut=PORT?{x:r.x+r.w/2,y:r.y+r.h}:{x:r.x+r.w,y:r.y+r.h/2};
+    /* teams */
+    TEAMS.forEach((n,i)=>{const b=L.team(i),o=eo(P(t,T.team0+i*0.18,0.4)),talk=t>T.team0+i*0.18+0.3&&t<T.flowIn+i*0.25+0.5;
+      let w="";for(let k=0;k<7;k++){const hh=talk?6+18*Math.abs(Math.sin(t*9+k*1.7+i)):4;w+=box(b.w-78+k*8,(b.h-hh)/2-1.5,4,hh,`border-radius:2px;background:${talk?"#F2A33A":"#5B6E82"}`);}
+      h+=box(b.x,b.y+(1-o)*10,b.w,b.h,`border:1.5px solid #5B6E82;border-radius:10px;opacity:${o*A}`,`<div style="left:18px;top:${(b.h-L.f*1.25)/2-1.5}px;font-size:${L.f}px;line-height:1.25">${n}</div>${w}`);
+      const ax=PORT?b.x+b.w/2:b.x+b.w,ay=PORT?b.y+b.h:b.y+b.h/2;
+      if(A>=1)h+=dots(t,T.flowIn+i*0.25,0.9,ax,ay,rIn.x,rIn.y);});
+    /* the record */
+    const ro=eo(P(t,T.flowIn+0.5,0.5)),reading=t>=T.read0&&t<T.read1+0.2,rp=P(t,T.read0,T.read1-T.read0);
+    let inner=`<div class="mono" style="left:22px;top:20px;font-size:${L.mono}px;color:#3A4A5C">The record</div>`+box(22,54,r.w-44,1.5,"background:#C3CEDA");
+    DOCS.forEach((n,i)=>{const s=eo(P(t,T.docs[i],0.45));if(s<=0)return;const y=64+i*rowH,lit=reading&&Math.abs(rp*DOCS.length-0.5-i)<0.6;
+      inner+=box(12,y+3+(1-s)*8,r.w-24,rowH-6,`border-radius:8px;background:${lit?"rgba(242,163,58,.28)":"transparent"};opacity:${s}`,
+        box(12,(rowH-6-30)/2,24,30,`border:2px solid #0B1B2B;border-radius:4px;background:${i>=4?"#E6ECF2":"#FFFFFF"}`,box(4,7,12,2,"background:#0B1B2B")+box(4,13,12,2,"background:#0B1B2B")+box(4,19,7,2,"background:#0B1B2B"))
+        +`<div style="left:52px;top:${(rowH-6-L.f*1.25)/2}px;font-size:${L.f}px;line-height:1.25;color:#0B1B2B">${n}</div>`);});
+    if(reading)inner+=box(r.w-74,14,52,30,"border-radius:15px;background:#0B1B2B",`<div class="mono" style="left:0;width:52px;text-align:center;top:5px;font-size:${L.mono-3}px;color:#F2A33A">AI</div>`);
+    h+=box(r.x,r.y+(1-ro)*20,r.w,r.h,`border-radius:12px;background:#F6F8FA;opacity:${ro*A};overflow:hidden;box-shadow:0 0 0 ${reading?4:0}px rgba(242,163,58,.55)`,inner);
+    /* vendors */
+    for(let i=0;i<3;i++){const b=L.ven(i),o=eo(P(t,T.ven0+i*0.2,0.4)),demo=t>T.demo+i*0.5-0.45&&t<T.demo+i*0.5+0.25;
+      const vin=PORT?{x:b.x+b.w/2,y:b.y}:{x:b.x,y:b.y+b.h/2};
+      h+=box(b.x,b.y+(1-o)*10,b.w,b.h,`border:1.5px solid ${demo?"#F2A33A":"#5B6E82"};border-radius:10px;opacity:${o*A}`,
+        `<div class="mono" style="left:18px;top:18px;font-size:${L.mono}px;color:#A9B8C8">Vendor ${"ABC"[i]}</div><div style="left:18px;top:${b.h-L.f*1.25-18}px;font-size:${L.f}px;line-height:1.25;color:${demo?"#F2A33A":"#F6F8FA"}">${demo?"Demo":t>T.demo+i*0.5?"Demo recorded":t>T.brief+i*0.2+0.8?"Has the brief":"&nbsp;"}</div>`);
+      if(A>=1){h+=dots(t,T.brief+i*0.2,0.8,rOut.x,rOut.y,vin.x,vin.y);h+=dots(t,T.demo+i*0.5,0.8,vin.x,vin.y,rOut.x,rOut.y);}}
+  }
+  /* scene B: the comparison grid */
+  const B=eo(P(t,T.grid0,0.5));
+  if(B>0){const g=L.grid,tabH=PORT?58:52,top=tabH+26,headH=PORT?56:50,rowH=(g.h-top-headH)/DIMS.length,c0=PORT?g.w*0.40:g.w*0.34,cw=(g.w-c0)/3;
+    const lens=t<T.lens0?-1:Math.min(5,Math.floor((t-T.lens0)/T.lensStep));
+    const tw=PORT?(g.w-2*10)/3:(g.w-5*10)/6,tabsO=eo(P(t,T.lens0-0.5,0.4));
+    let inner="";
+    TEAMS.forEach((n,i)=>{const on=i===lens,tx=PORT?(i%3)*(tw+10):i*(tw+10),th=PORT?50:tabH;
+      inner+=box(tx,PORT?Math.floor(i/3)*(th+6):0,tw,th,`border-radius:${th/2}px;border:1.5px solid ${on?"#F2A33A":"#5B6E82"};background:${on?"#F2A33A":"transparent"};opacity:${tabsO}`,
+        `<div style="left:0;width:${tw}px;text-align:center;top:${(th-L.f*0.9*1.25)/2-1.5}px;font-size:${L.f*0.9}px;line-height:1.25;color:${on?"#0B1B2B":"#D5DEE8"}">${n}</div>`);});
+    const gy=PORT?2*50+6+22:top;
+    let tbl="";
+    for(let v=0;v<3;v++)tbl+=`<div class="mono" style="left:${c0+v*cw}px;top:${(headH-L.mono*1.3)/2}px;font-size:${L.mono}px;color:#3A4A5C">Vendor ${"ABC"[v]}</div>`;
+    tbl+=`<div class="mono" style="left:24px;top:${(headH-L.mono*1.3)/2}px;font-size:${L.mono}px;color:#3A4A5C">What matters</div>`+box(0,headH-1.5,g.w,1.5,"background:#C3CEDA");
+    const rH=(g.h-gy-headH)/DIMS.length;
+    DIMS.forEach((n,i)=>{const s=eo(P(t,T.grid0+0.3+i*0.12,0.4)),on=i===lens,y=headH+i*rH;
+      tbl+=box(0,y,g.w,rH,`background:${on?"rgba(242,163,58,.2)":"transparent"};opacity:${s}`,
+        (on?box(0,0,6,rH,"background:#F2A33A"):"")+`<div style="left:24px;top:${(rH-L.f*1.25)/2}px;font-size:${L.f}px;line-height:1.25;color:#0B1B2B">${n}</div>`
+        +[0,1,2].map(v=>{const sc=SCORE[i][v],best=on&&sc===Math.max(...SCORE[i]),fill=eo(P(t,T.grid0+0.7+i*0.1+v*0.08,0.5));let d="";const ds=PORT?22:18;
+          for(let k=0;k<5;k++)d+=box(c0+v*cw+k*(ds+6),(rH-ds)/2,ds,ds,`border-radius:4px;background:${k<sc*fill?(best?"#F2A33A":on?"#0B1B2B":"#3A4A5C"):(on?"#FFFFFF":"#D5DEE8")}`);return d;}).join("")
+        +box(0,rH-1,g.w,1,"background:#E6ECF2"));});
+    inner+=box(0,gy,g.w,g.h-gy,"border-radius:12px;background:#F6F8FA;overflow:hidden",tbl);
+    h+=box(g.x,g.y+(1-B)*20,g.w,g.h,`opacity:${B}`,inner);
+  }
+  stage.innerHTML=h;stage.style.opacity=all;
+}
+const stage=document.getElementById("stage");stage.style.width=L.W+"px";stage.style.height=L.H+"px";
+window.END=T.END;window.seek=render;
+document.fonts.load('600 20px "Space Grotesk"').then(()=>document.fonts.load('500 20px "IBM Plex Mono"')).then(()=>document.fonts.load('500 20px "Inter"')).then(()=>document.fonts.ready).then(()=>{
+  if(Q.get("capture")){render(0);window.READY=true;return;}
+  const fit=()=>{const s=Math.min(innerWidth/L.W,innerHeight/L.H);stage.style.transform=`translate(${(innerWidth-L.W*s)/2}px,${(innerHeight-L.H*s)/2}px) scale(${s})`;};
+  fit();addEventListener("resize",fit);
+  if(Q.get("t")){render(Number(Q.get("t")));return;}
+  const t0=performance.now();(function loop(){render(((performance.now()-t0)/1000)%T.END);requestAnimationFrame(loop);})();
+});
+</script>
+</body>
+</html>
