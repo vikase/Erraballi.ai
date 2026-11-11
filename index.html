@@ -49,6 +49,22 @@ header{overflow:hidden}
 @media (max-width:640px){.hero-wrap{display:flex;flex-direction:column}.hero-wrap>nav{order:-2}
   .hz{order:-1;height:64px;margin-top:20px}.hero-copy{padding-top:36px !important}
   .hero-wrap>nav>div{gap:4px 18px !important;font-size:14.5px !important}}
+.loop-orbit{transform-origin:210px 160px;animation:loop-spin 14s linear infinite}
+@keyframes loop-spin{to{transform:rotate(360deg)}}
+.ico{display:block;width:44px;height:44px;margin:0 0 14px 0;fill:none;stroke:#0B1B2B;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ico .a{stroke:#F2A33A}.ico .af{fill:#F2A33A;stroke:none}
+.ico-s{width:32px;height:32px;margin:0 0 12px 0}
+.sc{position:relative;border-radius:8px;overflow:hidden;border:1px solid #24364A;background:#0B1B2B}
+.sc-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.sc-track::-webkit-scrollbar{display:none}
+.sc-slide{position:relative;flex:0 0 100%;scroll-snap-align:start;display:block;color:#F6F8FA;text-decoration:none}
+.sc-slide img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover}
+.sc-cap{position:absolute;left:0;right:0;bottom:0;padding:28px 16px 12px 16px;font-family:'IBM Plex Mono',monospace;font-size:13px;background:linear-gradient(rgba(11,27,43,0),rgba(11,27,43,.92))}
+.sc-dots{display:flex;gap:4px;justify-content:center;margin-top:8px}
+.sc-dots button{width:28px;height:28px;padding:0;border:0;background:none;cursor:pointer;position:relative}
+.sc-dots button::after{content:"";position:absolute;left:8px;top:13px;width:12px;height:2px;border-radius:2px;background:#5B6E82;transition:all .25s}
+.sc-dots button[aria-current="true"]::after{left:3px;width:22px;background:#F2A33A}
+@media (prefers-reduced-motion: reduce){.loop-orbit{animation:none}}
 .film{margin-top:72px}
 .film video{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:10px;border:1px solid #24364A;background:#0B1B2B}
 @media (max-width:640px){.film{margin-top:36px}.film video{aspect-ratio:4/5}}
@@ -78,7 +94,6 @@ header{overflow:hidden}
 <a href="#engagements" style="color: #D5DEE8; text-decoration: none; padding: 12px 0">Engagements</a>
 <a href="#writing" style="color: #D5DEE8; text-decoration: none; padding: 12px 0">Writing</a>
 <a href="#about" style="color: #D5DEE8; text-decoration: none; padding: 12px 0">About</a>
-<a href="/studios/" style="color: #D5DEE8; text-decoration: none; padding: 12px 0">Studios</a>
 <a href="mailto:vikas@erraballi.org" style="color: #0B1B2B; background: #F2A33A; text-decoration: none; padding: 12px 18px; border-radius: 6px; font-weight: 600">Book a call</a>
 </div>
 </nav>
@@ -162,31 +177,37 @@ header{overflow:hidden}
 <h2 style="margin: 0 0 32px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 30px; line-height: 1.2; max-width: 760px">AI went where the work was, one department at a time.</h2>
 <div style="display: flex; flex-wrap: wrap; gap: 20px">
 <div style="flex: 1 1 320px; background: #FFFFFF; border: 1px solid #D5DEE8; border-radius: 10px; padding: 22px">
+<svg class="ico ico-s" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3l11 4v8c0 7-4.500 11.500-11 14C9.500 26.500 5 22 5 15V7z"/><path class="a" d="M11 16l3.500 3.500L21 12.500"/></svg>
 <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #3A4A5C">Vendor risk</div>
 <h3 style="margin: 8px 0 8px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px">Faster vendor due diligence</h3>
 <p style="margin: 0; font-size: 15px; color: #3A4A5C">AI drafts the finance and security reviews. One rule holds: it can never lower the rating of a high-risk vendor.</p>
 </div>
 <div style="flex: 1 1 320px; background: #FFFFFF; border: 1px solid #D5DEE8; border-radius: 10px; padding: 22px">
+<svg class="ico ico-s" viewBox="0 0 32 32" aria-hidden="true"><path d="M8 3h12l6 6v20H8z"/><path d="M20 3v6h6"/><path class="a" d="M12 16v4h3v-4h-3c0-2 1-3 3-3M18 16v4h3v-4h-3c0-2 1-3 3-3"/></svg>
 <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #3A4A5C">Legal</div>
 <h3 style="margin: 8px 0 8px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px">Contract clauses, word for word</h3>
 <p style="margin: 0; font-size: 15px; color: #3A4A5C">Liability, indemnity and termination terms pulled from vendor contracts as exact quotes, because counsel did not trust summaries.</p>
 </div>
 <div style="flex: 1 1 320px; background: #FFFFFF; border: 1px solid #D5DEE8; border-radius: 10px; padding: 22px">
+<svg class="ico ico-s" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 6h24v16H15l-6 5v-5H4z"/><path class="a" d="M10 12h12M10 16.500h7"/></svg>
 <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #3A4A5C">Contact center</div>
 <h3 style="margin: 8px 0 8px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px">Answers during the call</h3>
 <p style="margin: 0; font-size: 15px; color: #3A4A5C">A knowledge base built from past calls. Reps ask it questions while the customer is on the line.</p>
 </div>
 <div style="flex: 1 1 320px; background: #FFFFFF; border: 1px solid #D5DEE8; border-radius: 10px; padding: 22px">
+<svg class="ico ico-s" viewBox="0 0 32 32" aria-hidden="true"><rect x="6" y="4" width="20" height="24" rx="1"/><path d="M15 11h7M15 16h7M15 21h7"/><path class="a" d="M10 11h1M10 16h1M10 21h1"/></svg>
 <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #3A4A5C">Projects</div>
 <h3 style="margin: 8px 0 8px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px">A meeting in, a plan out</h3>
 <p style="margin: 0; font-size: 15px; color: #3A4A5C">A one-hour recorded meeting became a 10-page requirements document, with owners and risks.</p>
 </div>
 <div style="flex: 1 1 320px; background: #FFFFFF; border: 1px solid #D5DEE8; border-radius: 10px; padding: 22px">
+<svg class="ico ico-s" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 4h11l13 13-11 11L4 15z"/><circle class="a" cx="10.500" cy="10.500" r="2"/></svg>
 <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #3A4A5C">Pricing</div>
 <h3 style="margin: 8px 0 8px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px">Simpler fees, because clients asked</h3>
 <p style="margin: 0; font-size: 15px; color: #3A4A5C">Client feedback, read by AI, showed that the fees felt complicated and hard to follow. We unified the fee structure and put the change in place.</p>
 </div>
 <div style="flex: 1 1 320px; background: #FFFFFF; border: 1px solid #D5DEE8; border-radius: 10px; padding: 22px">
+<svg class="ico ico-s" viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="6" width="24" height="22" rx="1"/><path d="M4 12h24M10 3v6M22 3v6"/><path class="a" d="M11 20l3.500 3.500L21 17"/></svg>
 <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #3A4A5C">Operations</div>
 <h3 style="margin: 8px 0 8px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px">Deposit review, every day</h3>
 <p style="margin: 0; font-size: 15px; color: #3A4A5C">Remote-deposit checks moved from month-end to daily, then went to the operations team as a one-click tool.</p>
@@ -197,26 +218,39 @@ header{overflow:hidden}
 <section id="how" style="padding: 72px 0 72px 0">
 <p style="margin: 0 0 8px 0; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #3A4A5C">How I work</p>
 <h2 style="margin: 0 0 32px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 30px; line-height: 1.2">One real problem. Four steps.</h2>
-<div style="display: flex; flex-wrap: wrap; gap: 28px">
-<div style="flex: 1 1 220px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 32px 56px">
+<svg viewBox="0 0 420 320" role="img" aria-label="A loop of four steps: find, build, measure, loop, then back to find" style="flex: 1 1 300px; max-width: 420px; min-width: 0; height: auto; margin: 0 auto">
+<circle cx="210" cy="160" r="110" fill="none" stroke="#C3CEDA" stroke-width="1.5"/>
+<g fill="none" stroke="#3A4A5C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M283 77l8 2-2-8" transform="rotate(8 288 82)"/><path d="M291 233l-2 8 8-2" transform="rotate(-8 288 238)"/><path d="M137 243l-8-2 2 8" transform="rotate(8 132 238)"/><path d="M129 87l2-8-8 2" transform="rotate(-8 132 82)"/>
+</g>
+<g class="loop-orbit"><circle cx="210" cy="50" r="26" fill="#F2A33A" opacity=".18"/><circle cx="210" cy="50" r="21" fill="none" stroke="#F2A33A" stroke-width="2"/></g>
+<g fill="#F6F8FA" stroke="#0B1B2B" stroke-width="1.5"><circle cx="210" cy="50" r="16"/><circle cx="320" cy="160" r="16"/><circle cx="210" cy="270" r="16"/><circle cx="100" cy="160" r="16"/></g>
+<g font-family="'IBM Plex Mono', monospace" font-size="12" fill="#0B1B2B" text-anchor="middle"><text x="210" y="54">01</text><text x="320" y="164">02</text><text x="210" y="274">03</text><text x="100" y="164">04</text></g>
+<g font-family="'Space Grotesk', sans-serif" font-weight="600" font-size="17" fill="#0B1B2B"><text x="210" y="20" text-anchor="middle">Find</text><text x="346" y="166">Build</text><text x="210" y="310" text-anchor="middle">Measure</text><text x="74" y="166" text-anchor="end">Loop</text></g>
+<g font-family="'IBM Plex Mono', monospace" font-size="12" fill="#3A4A5C" text-anchor="middle"><text x="210" y="156">better</text><text x="210" y="174">every month</text></g>
+</svg>
+<div style="flex: 1 1 460px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 28px 32px">
+<div>
 <div style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #3A4A5C">01</div>
 <h3 style="margin: 8px 0 8px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 22px">Find</h3>
 <p style="margin: 0; font-size: 16px; color: #3A4A5C">I start with your work, not with a tool. We pick the problem where AI pays most.</p>
 </div>
-<div style="flex: 1 1 220px">
+<div>
 <div style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #3A4A5C">02</div>
 <h3 style="margin: 8px 0 8px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 22px">Build</h3>
 <p style="margin: 0; font-size: 16px; color: #3A4A5C">I build the first version myself, with your people, for a fixed scope and fee. Your data stays yours.</p>
 </div>
-<div style="flex: 1 1 220px">
+<div>
 <div style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #3A4A5C">03</div>
 <h3 style="margin: 8px 0 8px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 22px">Measure</h3>
 <p style="margin: 0; font-size: 16px; color: #3A4A5C">Three gates: validate, pilot, scale. Each has a number to hit and a rule for when to stop.</p>
 </div>
-<div style="flex: 1 1 220px">
+<div>
 <div style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #3A4A5C">04</div>
 <h3 style="margin: 8px 0 8px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 22px">Loop</h3>
 <p style="margin: 0; font-size: 16px; color: #3A4A5C">I wire in the feedback and train your champions, so the system keeps improving after I leave.</p>
+</div>
 </div>
 </div>
 </section>
@@ -225,15 +259,18 @@ header{overflow:hidden}
 <p style="margin: 0 0 8px 0; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #3A4A5C">What you keep</p>
 <h2 style="margin: 0 0 32px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 30px; line-height: 1.2">Three things stay when I go.</h2>
 <div style="display: flex; flex-wrap: wrap; gap: 28px">
-<div style="flex: 1 1 260px; border-top: 2px solid #0B1B2B; padding-top: 16px">
+<div style="flex: 1 1 260px; border-top: 2px solid #0B1B2B; padding-top: 18px">
+<svg class="ico" viewBox="0 0 44 44" aria-hidden="true"><path d="M5 39h34"/><rect x="8" y="26" width="7" height="13"/><rect x="18.5" y="18" width="7" height="21"/><rect class="af" x="29" y="8" width="7" height="31"/></svg>
 <h3 style="margin: 0 0 8px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 20px">A working result</h3>
 <p style="margin: 0; font-size: 16px; color: #3A4A5C">One AI use case in daily use, with a measured return.</p>
 </div>
-<div style="flex: 1 1 260px; border-top: 2px solid #0B1B2B; padding-top: 16px">
+<div style="flex: 1 1 260px; border-top: 2px solid #0B1B2B; padding-top: 18px">
+<svg class="ico" viewBox="0 0 44 44" aria-hidden="true"><circle cx="12" cy="14" r="5"/><path d="M3 34c0-6 4-9 9-9s9 3 9 9"/><circle cx="31" cy="14" r="5"/><path d="M24 27c2-1.400 4.300-2 7-2 5 0 9 3 9 9"/><path class="a" d="M22 2v5M15.500 4.500l2 3.500M28.500 4.500l-2 3.500"/></svg>
 <h3 style="margin: 0 0 8px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 20px">A team that can find the next one</h3>
 <p style="margin: 0; font-size: 16px; color: #3A4A5C">Your people learn to spot and build AI uses themselves. AI makes them sharper. It does not replace them.</p>
 </div>
-<div style="flex: 1 1 260px; border-top: 2px solid #0B1B2B; padding-top: 16px">
+<div style="flex: 1 1 260px; border-top: 2px solid #0B1B2B; padding-top: 18px">
+<svg class="ico" viewBox="0 0 44 44" aria-hidden="true"><path d="M5 39h34"/><path d="M6 33c9-1 12-8 17-12s9-9 14-13"/><path class="a" d="M29 7h9v9"/><circle class="af" cx="23" cy="21" r="2.500"/><circle class="af" cx="12" cy="31" r="2.500"/></svg>
 <h3 style="margin: 0 0 8px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 20px">A system that improves</h3>
 <p style="margin: 0; font-size: 16px; color: #3A4A5C">Feedback is built in from the first day, so results grow month over month.</p>
 </div>
@@ -269,7 +306,34 @@ header{overflow:hidden}
 <div style="font-family: 'IBM Plex Mono', monospace; font-size: 15px">$350 / hour</div>
 </div>
 </div>
-<p style="margin: 20px 0 0 0; font-size: 15px; color: #3A4A5C">Run a studio, a small practice or a nonprofit? <a href="/studios/">See websites, outreach and simple tools</a>.</p>
+<div id="studios" style="margin-top: 48px; background: #0B1B2B; color: #F6F8FA; border-radius: 12px; padding: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 28px 44px">
+<div style="flex: 1 1 280px; min-width: 0">
+<p style="margin: 0 0 10px 0; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #F2A33A">Studios</p>
+<h3 style="margin: 0 0 12px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.2">Websites, outreach and simple tools.</h3>
+<p style="margin: 0 0 22px 0; font-size: 16px; color: #D5DEE8">For studios, small practices and nonprofits. One price for each project.</p>
+<a href="/studios/" style="display: inline-block; color: #F6F8FA; text-decoration: none; padding: 12px 20px; border-radius: 6px; border: 1px solid #5B6E82; font-weight: 500">See what I have built</a>
+</div>
+<div style="flex: 1 1 400px; min-width: 0">
+<div class="sc"><div class="sc-track" id="sc-track" tabindex="0" aria-label="Examples of studio work. Swipe to see more.">
+<a class="sc-slide" href="/studios/"><img src="studios/img/work-irdf.jpg" width="1200" height="750" loading="lazy" alt="The home page of a nonprofit donor website"><span class="sc-cap">Nonprofit · donor website</span></a>
+<a class="sc-slide" href="/studios/"><img src="studios/img/work-timesheet.jpg" width="1200" height="750" loading="lazy" alt="A timesheet app on a phone, with sample data"><span class="sc-cap">Small firm · timesheet app</span></a>
+<a class="sc-slide" href="/studios/"><img src="studios/img/work-family-tree.jpg" width="1200" height="750" loading="lazy" alt="A family tree website, with sample names"><span class="sc-cap">Family · private tree site</span></a>
+<a class="sc-slide" href="/studios/"><img src="studios/img/work-publishing.jpg" width="1200" height="750" loading="lazy" alt="An essay page and the erraballi.ai home page"><span class="sc-cap">Publishing · essay site</span></a>
+</div></div>
+<div class="sc-dots" id="sc-dots"><button type="button" aria-label="Show example 1 of 4" aria-current="true"></button><button type="button" aria-label="Show example 2 of 4"></button><button type="button" aria-label="Show example 3 of 4"></button><button type="button" aria-label="Show example 4 of 4"></button></div>
+</div>
+</div>
+<script>
+(function(){var t=document.getElementById("sc-track"),d=[].slice.call(document.getElementById("sc-dots").children),n=d.length,i=0,hold=false,timer;
+function go(k){t.scrollTo({left:k*t.clientWidth,behavior:"smooth"});}
+t.addEventListener("scroll",function(){var k=Math.round(t.scrollLeft/t.clientWidth);if(k!==i){i=k;d.forEach(function(b,x){if(x===i)b.setAttribute("aria-current","true");else b.removeAttribute("aria-current");});}},{passive:true});
+d.forEach(function(b,x){b.addEventListener("click",function(){hold=true;go(x);});});
+["pointerdown","touchstart","focusin","mouseenter"].forEach(function(e){t.addEventListener(e,function(){hold=true;},{passive:true});});
+t.addEventListener("mouseleave",function(){hold=false;});
+if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches&&"IntersectionObserver" in window){
+new IntersectionObserver(function(en){clearInterval(timer);if(en[0].isIntersecting)timer=setInterval(function(){if(!hold)go((i+1)%n);},3800);},{threshold:.5}).observe(t);}
+})();
+</script>
 </section>
 
 <section id="writing" style="padding: 64px 0 72px 0; background: #E6ECF2; box-shadow: 0 0 0 100vmax #E6ECF2; clip-path: inset(0 -100vmax)">
