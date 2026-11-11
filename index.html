@@ -65,6 +65,8 @@ header{overflow:hidden}
 .sc-dots button::after{content:"";position:absolute;left:8px;top:13px;width:12px;height:2px;border-radius:2px;background:#5B6E82;transition:all .25s}
 .sc-dots button[aria-current="true"]::after{left:3px;width:22px;background:#F2A33A}
 @media (prefers-reduced-motion: reduce){.loop-orbit{animation:none}}
+.clip{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:8px;border:1px solid #24364A;background:#0B1B2B}
+@media (max-width:640px){.clip{aspect-ratio:4/5}}
 .film{margin-top:72px}
 .film video{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:10px;border:1px solid #24364A;background:#0B1B2B}
 @media (max-width:640px){.film{margin-top:36px}.film video{aspect-ratio:4/5}}
@@ -175,6 +177,25 @@ header{overflow:hidden}
 <section id="more" style="padding: 64px 0 72px 0; background: #E6ECF2; box-shadow: 0 0 0 100vmax #E6ECF2; clip-path: inset(0 -100vmax)">
 <p style="margin: 0 0 8px 0; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #3A4A5C">Same bank, more problems solved</p>
 <h2 style="margin: 0 0 32px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 30px; line-height: 1.2; max-width: 760px">AI went where the work was, one department at a time.</h2>
+<div style="margin: 0 0 20px 0; background: #0B1B2B; color: #F6F8FA; border-radius: 12px; padding: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 24px 40px">
+<div style="flex: 1.5 1 420px; min-width: 0">
+<video id="clip-meeting" class="clip" muted loop playsinline preload="metadata" poster="clips/meeting/meeting-landscape-poster.jpg" aria-label="A 12-second silent clip. A one-hour meeting is recorded. AI writes it up as a 10-page requirements document, with owners and risks.">
+<source src="clips/meeting/meeting-landscape.webm" type="video/webm"><source src="clips/meeting/meeting-landscape.mp4" type="video/mp4">
+</video>
+</div>
+<div style="flex: 1 1 260px; min-width: 0">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #F2A33A">Projects</div>
+<h3 style="margin: 8px 0 10px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 26px; line-height: 1.2">A meeting in, a plan out</h3>
+<p style="margin: 0; font-size: 16px; color: #D5DEE8">A one-hour recorded meeting became a 10-page requirements document, with owners and risks.</p>
+</div>
+</div>
+<script>
+(function(){var v=document.getElementById("clip-meeting");if(!v)return;
+ if(window.matchMedia("(max-width:640px)").matches){v.poster="clips/meeting/meeting-portrait-poster.jpg";v.innerHTML='<source src="clips/meeting/meeting-portrait.webm" type="video/webm"><source src="clips/meeting/meeting-portrait.mp4" type="video/mp4">';v.load();}
+ if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){v.controls=true;return;}
+ if("IntersectionObserver" in window){new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){v.play().catch(function(){v.controls=true;});}else{v.pause();}});},{threshold:.35}).observe(v);}
+})();
+</script>
 <div style="display: flex; flex-wrap: wrap; gap: 20px">
 <div style="flex: 1 1 320px; background: #FFFFFF; border: 1px solid #D5DEE8; border-radius: 10px; padding: 22px">
 <svg class="ico ico-s" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3l11 4v8c0 7-4.500 11.500-11 14C9.500 26.500 5 22 5 15V7z"/><path class="a" d="M11 16l3.500 3.500L21 12.500"/></svg>
@@ -193,12 +214,6 @@ header{overflow:hidden}
 <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #3A4A5C">Contact center</div>
 <h3 style="margin: 8px 0 8px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px">Answers during the call</h3>
 <p style="margin: 0; font-size: 15px; color: #3A4A5C">A knowledge base built from past calls. Reps ask it questions while the customer is on the line.</p>
-</div>
-<div style="flex: 1 1 320px; background: #FFFFFF; border: 1px solid #D5DEE8; border-radius: 10px; padding: 22px">
-<svg class="ico ico-s" viewBox="0 0 32 32" aria-hidden="true"><rect x="6" y="4" width="20" height="24" rx="1"/><path d="M15 11h7M15 16h7M15 21h7"/><path class="a" d="M10 11h1M10 16h1M10 21h1"/></svg>
-<div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #3A4A5C">Projects</div>
-<h3 style="margin: 8px 0 8px 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 19px">A meeting in, a plan out</h3>
-<p style="margin: 0; font-size: 15px; color: #3A4A5C">A one-hour recorded meeting became a 10-page requirements document, with owners and risks.</p>
 </div>
 <div style="flex: 1 1 320px; background: #FFFFFF; border: 1px solid #D5DEE8; border-radius: 10px; padding: 22px">
 <svg class="ico ico-s" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 4h11l13 13-11 11L4 15z"/><circle class="a" cx="10.500" cy="10.500" r="2"/></svg>
