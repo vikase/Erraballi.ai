@@ -79,6 +79,8 @@ header{overflow:hidden}
 @media (prefers-reduced-motion: reduce){.hz-line,.hz-sun,.hz-disc,.hz-glow,.hero-copy{animation:none}}
 
 </style>
+<link rel="stylesheet" href="/lead.css">
+<script defer src="/site.js"></script>
 </head>
 <body>
 <div style="font-family: Inter, system-ui, sans-serif; color: #0B1B2B; background: #F6F8FA; font-size: 17px; line-height: 1.55">
@@ -96,7 +98,7 @@ header{overflow:hidden}
 <a href="#engagements" style="color: #D5DEE8; text-decoration: none; padding: 12px 0">Engagements</a>
 <a href="#writing" style="color: #D5DEE8; text-decoration: none; padding: 12px 0">Writing</a>
 <a href="#about" style="color: #D5DEE8; text-decoration: none; padding: 12px 0">About</a>
-<a href="mailto:vikas@erraballi.org" style="color: #0B1B2B; background: #F2A33A; text-decoration: none; padding: 12px 18px; border-radius: 6px; font-weight: 600">Book a call</a>
+<a href="#contact" data-cta="nav" style="color: #0B1B2B; background: #F2A33A; text-decoration: none; padding: 12px 18px; border-radius: 6px; font-weight: 600">Book a call</a>
 </div>
 </nav>
 
@@ -105,7 +107,7 @@ header{overflow:hidden}
 <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(40px, 6vw, 72px); line-height: 1.05; letter-spacing: -0.02em">The future is already here. I'll put it to work in your business.</h1>
 <p style="margin: 28px 0 0 0; font-size: 21px; line-height: 1.5; color: #D5DEE8; max-width: 720px">I find the problem where AI pays, build the first version with your team, and set it up to get better every month.</p>
 <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 36px">
-<a href="mailto:vikas@erraballi.org" style="color: #0B1B2B; background: #F2A33A; text-decoration: none; padding: 14px 22px; border-radius: 6px; font-weight: 600">Book a 30-minute call</a>
+<a href="#contact" data-cta="hero" style="color: #0B1B2B; background: #F2A33A; text-decoration: none; padding: 14px 22px; border-radius: 6px; font-weight: 600">Book a 30-minute call</a>
 <a href="#proof" style="color: #F6F8FA; text-decoration: none; padding: 13px 22px; border-radius: 6px; border: 1px solid #5B6E82; font-weight: 500">See the proof</a>
 </div>
 </div>
@@ -393,17 +395,24 @@ new IntersectionObserver(function(en){clearInterval(timer);if(en[0].isIntersecti
 
 </main>
 
-<footer style="background: #0B1B2B; color: #F6F8FA">
+<footer id="contact" style="background: #0B1B2B; color: #F6F8FA">
 <div style="max-width: 1120px; margin: 0 auto; padding: 72px 32px 40px 32px; box-sizing: border-box">
 <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(28px, 4vw, 40px); line-height: 1.15; max-width: 760px">Bring one problem. Leave the call knowing if AI can pay for it.</h2>
+<form class="lead" data-form="home">
+<label>Name<input name="name" type="text" autocomplete="name" required maxlength="100"></label>
+<label>Work email<input name="email" type="email" autocomplete="email" required maxlength="150"></label>
+<label class="wide">Company<input name="company" type="text" autocomplete="organization" maxlength="150"></label>
+<label class="wide">What problem do you want to fix?<textarea name="message" maxlength="2000"></textarea></label>
+<label class="hp" aria-hidden="true">Website<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+<div class="lead-row"><button type="submit">Request a 30-minute call</button><span class="lead-status" role="status">This goes straight to my inbox.</span></div>
+</form>
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px; margin-top: 28px">
-<a href="mailto:vikas@erraballi.org" style="color: #0B1B2B; background: #F2A33A; text-decoration: none; padding: 14px 22px; border-radius: 6px; font-weight: 600">Book a 30-minute call</a>
 <a href="mailto:vikas@erraballi.org" style="color: #D5DEE8; padding: 12px 0">vikas@erraballi.org</a>
 <a href="https://www.linkedin.com/in/vikas-erraballi-0826532/" rel="me noopener" target="_blank" style="color: #D5DEE8; padding: 12px 0">LinkedIn</a>
 </div>
 <div aria-hidden="true" style="border-bottom: 1px solid #5B6E82; margin-top: 56px"></div>
 <p style="margin: 20px 0 0 0; font-size: 15px; color: #D5DEE8">Run a studio, a small practice or a nonprofit? <a href="/studios/" style="color: #F6F8FA">Websites, outreach and simple tools</a>.</p>
-<p style="margin: 12px 0 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #A9B8C8">© 2026 Vikas Erraballi · erraballi.ai</p>
+<p style="margin: 12px 0 0 0; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #A9B8C8">© 2026 Vikas Erraballi · erraballi.ai<span id="ga-note"></span></p>
 </div>
 </footer>
 

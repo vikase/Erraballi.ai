@@ -80,6 +80,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 
 footer a{color:var(--mist)}
 @media (max-width:640px){.wrap{padding:0 20px}.hero{padding-top:48px}section{padding:56px 0}}
 </style>
+<link rel="stylesheet" href="/lead.css">
+<script defer src="/site.js"></script>
 </head>
 <body>
 
@@ -103,7 +105,7 @@ footer a{color:var(--mist)}
       <p class="lede">If you run a training studio, a clinic, a small professional practice or a nonprofit, you do not need a strategy deck. You need a website that brings people in, outreach that sounds like you, and numbers you can trust. I rebuild your site, write and schedule your campaigns, and set up simple reporting and tools that keep clients coming back.</p>
       <p class="lede">Each project has one price, agreed before I start.</p>
       <div class="cta">
-        <a class="btn" href="mailto:vikas@erraballi.org?subject=Website%20and%20outreach">Tell me about your business</a>
+        <a class="btn" href="#contact" data-cta="studios-hero">Tell me about your business</a>
         <a class="email" href="mailto:vikas@erraballi.org">vikas@erraballi.org</a>
       </div>
     </div>
@@ -129,9 +131,16 @@ footer a{color:var(--mist)}
       <p class="label">Contact</p>
       <h2>Start with a short call.</h2>
       <p class="say">Tell me what you run and where clients come from today. I will tell you what I would fix first and what it would cost.</p>
+<form class="lead light" data-form="studios">
+<label>Name<input name="name" type="text" autocomplete="name" required maxlength="100"></label>
+<label>Email<input name="email" type="email" autocomplete="email" required maxlength="150"></label>
+<label class="wide">Company<input name="company" type="text" autocomplete="organization" maxlength="150"></label>
+<label class="wide">What do you run, and where do clients come from today?<textarea name="message" maxlength="2000"></textarea></label>
+<label class="hp" aria-hidden="true">Website<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+<div class="lead-row"><button type="submit">Request a call</button><span class="lead-status" role="status">This goes straight to my inbox.</span></div>
+</form>
       <div class="cta">
-        <a class="btn" href="mailto:vikas@erraballi.org?subject=Website%20and%20outreach">Email me</a>
-        <span class="email">vikas@erraballi.org</span>
+        <a class="email" href="mailto:vikas@erraballi.org?subject=Website%20and%20outreach">vikas@erraballi.org</a>
       </div>
     </section>
   </div>

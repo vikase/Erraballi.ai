@@ -1,0 +1,23 @@
+/* Lead form, Horizon brand. Default is for a Night background. Add class "light" on a Day background. */
+.lead{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px;max-width:760px;margin-top:32px}
+.lead label{display:block;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#A9B8C8}
+.lead .wide{grid-column:1 / -1}
+.lead input,.lead textarea{display:block;width:100%;margin-top:6px;padding:12px 14px;font:inherit;font-family:'Inter',sans-serif;font-size:16px;line-height:1.4;color:#F6F8FA;background:#12283D;border:1px solid #5B6E82;border-radius:6px}
+.lead textarea{min-height:112px;resize:vertical}
+.lead input:focus,.lead textarea:focus{outline:2px solid #F2A33A;outline-offset:1px;border-color:#F2A33A}
+.lead .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.lead .lead-row{grid-column:1 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.lead button{font:inherit;font-weight:600;color:#0B1B2B;background:#F2A33A;border:0;border-radius:6px;padding:14px 22px;cursor:pointer}
+.lead button:hover{background:#F7B659}
+.lead button:disabled{opacity:.6;cursor:default}
+.lead .lead-status{font-size:15px;color:#D5DEE8}
+.lead .lead-status a{color:inherit}
+.lead.sent label,.lead.sent button{display:none}
+.lead.sent .lead-status{font-size:19px;color:#F6F8FA}
+.lead.light label{color:#3A4A5C}
+.lead.light input,.lead.light textarea{color:#0B1B2B;background:#fff;border-color:#B8C4D1}
+.lead.light input:focus,.lead.light textarea:focus{outline-color:#1F5FBF;border-color:#1F5FBF}
+.lead.light button{color:#F6F8FA;background:#0B1B2B}
+.lead.light button:hover{background:#16314A}
+.lead.light .lead-status,.lead.light.sent .lead-status{color:#3A4A5C}
+@media (max-width:640px){.lead{grid-template-columns:1fr}}
