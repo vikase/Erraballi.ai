@@ -1,8 +1,9 @@
 /* erraballi.ai: analytics and lead form. Loaded on every page.
-   GA_ID is the Google Analytics 4 measurement ID. If it is empty, no analytics code loads.
+   GA_ID is the Google tag ID from Google Analytics (Admin > Data streams > erraballi.ai > tag instructions).
+   If it is empty, no analytics code loads.
    Leads go to the Google Form "erraballi.ai leads" (answers land in its linked Sheet). */
 (function () {
-  var GA_ID = '';
+  var GA_ID = 'GTM-NK8K8MNN';
   var FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdF8gAKYqrYJK-nPKCZrgfWlAZCuI3rR4rVVkcmNjEf7BO_eQ/formResponse';
   var ENTRY = { name: 'entry.1699689804', email: 'entry.738657282', company: 'entry.1459134194', message: 'entry.863628148', source: 'entry.1417167977' };
 
@@ -13,10 +14,9 @@
   if (GA_ID) {
     var s = document.createElement('script');
     s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    s.src = 'https://www.googletagmanager.com/gtm.js?id=' + GA_ID;
     document.head.appendChild(s);
     window.gtag('js', new Date());
-    window.gtag('config', GA_ID);
     document.addEventListener('DOMContentLoaded', function () {
       var n = document.getElementById('ga-note');
       if (n) n.textContent = ' · This site counts visits with Google Analytics.';
