@@ -5,6 +5,7 @@
 (function () {
   var GA_ID = 'GTM-NK8K8MNN';
   var FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdF8gAKYqrYJK-nPKCZrgfWlAZCuI3rR4rVVkcmNjEf7BO_eQ/formResponse';
+  var CAL_URL = 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1jHISP8S2GDwUF7lY6rLtVdG1cBAIOx66GSgnRHke8T_qgIM_AsF014SqoeSRx9PueqOACPDyM';
   var ENTRY = { name: 'entry.1699689804', email: 'entry.738657282', company: 'entry.1459134194', message: 'entry.863628148', source: 'entry.1417167977' };
 
   /* ---------- analytics ---------- */
@@ -92,7 +93,7 @@
       fetch(FORM_URL, { method: 'POST', mode: 'no-cors', body: data }).then(function () {
         track('generate_lead', { form_name: form.getAttribute('data-form') || 'contact', lead_source: SOURCE });
         form.classList.add('sent');
-        status.textContent = 'Got it. Thank you. I will reply by email.';
+        status.innerHTML = 'Got it. Thank you. I will reply by email. To fix a time now, <a href="' + CAL_URL + '" data-cta="calendar-after-form" target="_blank" rel="noopener">pick a slot on my calendar</a>.';
       }).catch(function () {
         button.disabled = false;
         status.innerHTML = 'That did not send. Please email <a href="mailto:vikas@erraballi.org">vikas@erraballi.org</a>.';
